@@ -1,21 +1,24 @@
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { FlatList, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { artworkUrl } from '@/api/pokeapi';
 import { Pokecard } from '@/components/pokecard';
-import { ErrorState, LoadingState } from '@/components/query-status';
+import { EmptyState, ErrorState, LoadingState } from '@/components/query-status';
+import { SearchBar } from '@/components/search-bar';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
-import { usePokemonList } from '@/hooks/use-pokemon';
+import { usePokemonSearch } from '@/hooks/use-pokemon-search';
 
 const COLUMNS = 2;
 
 export default function ListScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
-  const { data, isPending, isError, error, isRefetching, refetch } = usePokemonList();
+  const [query, setQuery] = useState('');
+  const { results, isSearching, isPending, isError, error, isRefetching, refetch } = usePokemonSearch(query);
 
   if (isPending) return <LoadingState />;
   if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />;
@@ -26,13 +29,21 @@ export default function ListScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView edges={['top']} style={styles.container}>
+        <View style={styles.searchBar}>
+          <SearchBar value={query} onChangeText={setQuery} />
+        </View>
         <FlatList
-          data={data}
+          data={results}
           numColumns={COLUMNS}
           keyExtractor={(item) => String(item.id)}
           columnWrapperStyle={styles.row}
           contentContainerStyle={styles.content}
-          ListHeaderComponent={<ThemedText type="heading">All Pokémon</ThemedText>}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          ListHeaderComponent={isSearching ? undefined : <ThemedText type="heading">All Pokémon</ThemedText>}
+          ListEmptyComponent={
+            <EmptyState title="No Pokémon found" message="Check the spelling or try a shorter name." />
+          }
           refreshing={isRefetching}
           onRefresh={() => void refetch()}
           // The list has ~1300 items: only render what is on (or near) the screen.
@@ -58,6 +69,7 @@ export default function ListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { paddingHorizontal: Spacing.four, paddingTop: Spacing.three, paddingBottom: Spacing.four, gap: Spacing.three },
+  searchBar: { paddingHorizontal: Spacing.three, paddingTop: Spacing.three },
+  content: { paddingHorizontal: Spacing.four, paddingTop: Spacing.four, paddingBottom: Spacing.four, gap: Spacing.three },
   row: { gap: Spacing.three },
 });
