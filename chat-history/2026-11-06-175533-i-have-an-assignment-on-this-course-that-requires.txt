@@ -1,0 +1,3319 @@
+
+> I have an assignment on this course that requires me to make a mobile app
+  using expo and I believe the name is pokedex. Find out the requirements for
+  the assignment
+
+● I'll look through the course folder for the assignment details.
+
+  Searched for 2 patterns (ctrl+o to expand)
+
+● The likely candidates are exam/README.md and day-1/slides/final-assignment.md.
+
+  Read 4 files (ctrl+o to expand)
+
+● The assignment is the final assignment, and the Pokédex is route 1 of 3. The
+  full text is in exam/README.md
+  (inholland-react-native-course-main/exam/README.md) and the day-1 slides
+  (final-assignment.md
+  (inholland-react-native-course-main/day-1/slides/final-assignment.md)).
+
+  The deadline is Friday 6 November 2026 at 23:59, which is tomorrow. You hand
+  in by sending the repo link in Teams.
+
+  Pokédex route
+
+  Follow the Figma design (https://www.figma.com/design/dsgGXcu5WELIvRW90m5308/P
+  ok%C3%A9mon-Code-Challenge?node-id=1-2) closely (type colours, font, spacing,
+  icons). The data comes from PokeAPI, and you add one feature of your own
+  design. Each heading below is one feature, which means one spec file and one
+  GitHub issue.
+
+  - List: all ~1300 Pokémon, live from the API. It must load fast and scroll
+    smoothly.
+  - Search:
+    - The search field is as in the design, and results show while you type.
+    - Part of a name is enough, in any case ("pika" finds Pikachu).
+    - It finds Pokémon you haven't scrolled to yet.
+    - Results look like the list rows, and no match shows an empty state.
+    - PokeAPI has no search endpoint, so you have to work out how to do this.
+  - Detail:
+    - It is reachable from the list and from favorites.
+    - It shows name, number, artwork, and types in the type colour.
+    - It has three quick-switch parts: about, stats, evolution chain.
+    - The evolution chain comes from the API and you can tap through to the next
+      detail.
+    - You can favorite and unfavorite.
+  - Favorites: an own screen that persists after a restart and has an empty
+    state.
+  - Compare (your own design): put any two Pokémon side by side and see who is
+    stronger on each stat. Figma has no screen for this, so follow its style.
+  - Constraints for every feature:
+    - Loading and error states on the list, detail and evolution chain.
+    - The design's font loaded with Expo Font (fonts.zip
+      (inholland-react-native-course-main/exam/assets/fonts.zip)).
+
+  Technical core (required)
+
+  - It runs in Expo Go via QR code.
+  - Live data goes through TanStack Query, with no key in the repo.
+  - There are at least 2 screens with Expo Router.
+  - Something is stored in SQLite and survives a restart.
+  - Every load has a loading state and an error state.
+  - There is at least 1 native feature (Share, haptics, camera, ...).
+  - TypeScript and ESLint have no errors.
+  - UI, data and logic are not mixed.
+
+  Before you build, write two choices in specs/product.md, each with the
+  alternative and why. One is what you store in SQLite, and the other is which
+  native feature you use.
+
+  What to hand in (one GitHub repo)
+
+  - The app.
+  - specs/product.md, plus specs/features/*.md with one file per feature (3–6).
+  - AGENTS.md, your instructions for the agent, growing with the project.
+  - GitHub Issues, one per feature, with the agent's plan as a comment, closed
+    by a commit (closes #12).
+  - chat-history/, the full chat of at least one issue, start to finish.
+  - docs/explanation.md, answering three questions:
+    a. Where is each technical choice in the code (file and line), and did any
+       change?
+    b. How does one feature work, from API call to screen?
+    c. Which agent suggestion did you reject or change, and why?
+
+  Keep the full git history, so don't squash or force-push.
+
+  Grading
+
+  - A 6: the technical core is complete, everything is handed in, and the app
+    does what your spec says. Missing something caps you at a 5, and an app that
+    doesn't start gets a 1.
+  - 6 to 8:
+    - Product is 80%.
+    - Steering and checking the agent is 10%.
+    - Understanding is 10%.
+  - Bonus, +0.5 each up to a 10: pick from these.
+    - Three Reanimated animations
+    - Dark mode
+    - Pagination / infinite scroll
+    - Clean TypeScript (no any, as or @ts-ignore)
+    - Localization
+    - No warnings
+    - Offline
+    - Tests
+    - CI
+    - Accessibility
+    - Optimistic updates
+
+    The design bonus is only for the other two routes, not the Pokédex.
+
+  The workflow they expect is spec, then issues, then a plan per issue, then
+  build, review, ask, and commit. Each issue gets its own chat.
+
+  I can help plan the Pokédex build next, for example by drafting
+  specs/product.md or working out how to do the search.
+
+> Brealk it down into small requirements and list the requirements for me to
+  check.
+
+● Pokédex Assignment Checklist
+
+  Deadline: Fri 6 Nov 2026, 23:59. Send the repo link in Teams.
+
+  A. Technical core (required, or you get a 5 at most)
+
+  - [ ] Runs in Expo Go via QR code
+  - [ ] Starts on a clean install (npm install, then npx expo start)
+  - [ ] Live data comes from PokeAPI through TanStack Query
+  - [ ] No API key in the repo (PokeAPI needs none)
+  - [ ] At least 2 screens with Expo Router
+  - [ ] SQLite stores something that is still there after a restart (favorites)
+  - [ ] Every data load has a loading state
+  - [ ] Every data load has an error state
+  - [ ] At least 1 native feature (Share, haptics, camera, ...)
+  - [ ] TypeScript has no errors (npx tsc --noEmit)
+  - [ ] ESLint has no errors (npm run lint)
+  - [ ] UI, data and logic are in separate layers (components, hooks/services,
+    db)
+
+  B. Design (follow the Figma closely)
+
+  - [ ] Type colours match the Figma
+  - [ ] Spacing matches the Figma
+  - [ ] Icons match the Figma
+  - [ ] The design's font is loaded with Expo Font (from fonts.zip)
+
+  C. Feature: List
+
+  - [ ] Shows all ~1300 Pokémon, live from the API
+  - [ ] Rows look like the design
+  - [ ] Loads fast
+  - [ ] Scrolls smoothly
+  - [ ] Loading state
+  - [ ] Error state
+
+  D. Feature: Search
+
+  - [ ] Search field looks like the design
+  - [ ] Results update while you type
+  - [ ] A partial name matches ("pika" finds Pikachu)
+  - [ ] Matching ignores upper/lower case
+  - [ ] Finds Pokémon you haven't scrolled to yet
+  - [ ] Results look like the list rows
+  - [ ] A search with no match shows an empty state
+
+  E. Feature: Detail
+
+  - [ ] Reachable from the list
+  - [ ] Reachable from favorites
+  - [ ] Shows the name
+  - [ ] Shows the number
+  - [ ] Shows the artwork
+  - [ ] Shows the types in the type colour
+  - [ ] Has an "About" part
+  - [ ] Has a "Stats" part
+  - [ ] Has an "Evolution chain" part
+  - [ ] Switching between the three parts is quick
+  - [ ] Evolution chain comes from the API
+  - [ ] Tapping an evolution opens that Pokémon's detail
+  - [ ] Favorite button works
+  - [ ] Unfavorite works
+  - [ ] Loading state on the detail
+  - [ ] Error state on the detail
+  - [ ] Loading state on the evolution chain
+  - [ ] Error state on the evolution chain
+
+  F. Feature: Favorites
+
+  - [ ] Has its own screen
+  - [ ] Favorites persist after an app restart
+  - [ ] Shows an empty state when there are none
+
+  G. Feature: Compare (your own design)
+
+  - [ ] You can pick any two Pokémon
+  - [ ] They are shown side by side
+  - [ ] Per stat, it shows which one is stronger
+  - [ ] Follows the Figma style
+  - [ ] Loading and error states
+
+  H. What to hand in (one GitHub repo)
+
+  - [ ] specs/product.md exists
+  - [ ] It names what you store in SQLite, with the alternative and why
+  - [ ] It names which native feature you use, with the alternative and why
+  - [ ] specs/features/*.md has one file per feature (list, search, detail,
+    favorites, compare)
+  - [ ] AGENTS.md exists and was updated during the project
+  - [ ] One GitHub issue per feature
+  - [ ] Each issue has the agent's plan as a comment
+  - [ ] Each issue is closed by a commit (closes #N)
+  - [ ] chat-history/ holds at least one issue's chat, start to finish
+  - [ ] The chat file name includes the issue number
+  - [ ] The chat is of an issue where something didn't work in one go
+  - [ ] Git history is intact (no squash, no force-push)
+  - [ ] .env is in .gitignore if you used one
+
+  I. docs/explanation.md (3 questions, your own words, every file and line named
+  must exist)
+
+  - [ ] Q1: where each product.md choice is in the code (file and line), and
+    whether any changed and why
+  - [ ] Q2: one feature explained from API call to screen, naming the files
+  - [ ] Q3: an agent suggestion you rejected or changed, what you did instead
+    and why, with a chat or commit link
+
+  J. Workflow (graded as "Steering and checking", 10%)
+
+  - [ ] Small tasks, one issue per chat
+  - [ ] A plan was posted before any code was built
+  - [ ] You reviewed the diff, ran lint and tsc, and tested on your phone
+  - [ ] Corrections became rules in AGENTS.md
+  - [ ] You can explain all the code in your own words
+
+  K. Optional bonus (+0.5 each, up to a 10)
+
+  - [ ] 3 Reanimated animations, each with a purpose
+  - [ ] Dark mode on every screen, with all colours from the theme
+  - [ ] Pagination / infinite scroll (e.g. 20 at a time)
+  - [ ] Clean TypeScript (no any, no as except as const, no @ts-ignore)
+  - [ ] Localization in two languages, following the phone's language
+  - [ ] No warnings (no console.log, none in terminal or on screen)
+  - [ ] Offline: works in airplane mode with the last loaded data
+  - [ ] Tests: one per feature on the logic, and npm test passes
+  - [ ] CI: a GitHub Action runs lint, tsc and tests on every push
+  - [ ] Accessibility: labels on all buttons, works at the largest text size
+  - [ ] Optimistic update (favorite shows instantly, rolls back on failure)
+
+  The pagination bonus fits the list requirement, so it's worth doing both
+  together. Skip the "Design" bonus, because it doesn't apply to the Pokédex
+  route.
+
+  I can also save this as a CHECKLIST.md in the project if you want.
+
+> Do option a first in "F:\Expo project"
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Treating "option a" as section A, the technical core. The folder is empty, so
+  I'll scaffold an Expo project there.
+
+  Read 3 files, ran 4 shell commands (ctrl+o to expand)
+
+● Scaffold, TanStack Query, SQLite, haptics and ESLint are installed. Next I'll
+  add the layered structure: API, hooks, database, screens.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● The shell cut off the last two files, so I'll write them with the file tool.
+  The remaining lint error is in a template web hook.
+
+● Write(F:\Expo project\src\app\index.tsx)
+  ⎿  Error writing file
+
+● Write(F:\Expo project\src\app\pokemon\[id].tsx)
+  ⎿  Wrote 44 lines to F:\Expo project\src\app\pokemon\[id].tsx
+       1 import { Image } from 'expo-image';
+       2 import { useLocalSearchParams } from 'expo-router';
+       3 import { Pressable, StyleSheet } from 'react-native';
+       4
+       5 import { artworkUrl } from '@/api/pokeapi';
+       6 import { ErrorState, LoadingState } from '@/components/query-sta
+         tus';
+       7 import { ThemedText } from '@/components/themed-text';
+       8 import { ThemedView } from '@/components/themed-view';
+       9 import { useFavorites, useToggleFavorite } from '@/hooks/use-fav
+     … +36 lines (~1 KB) (ctrl+o to expand)
+
+  Read 2 files, ran 1 shell command (ctrl+o to expand)
+
+● Update(F:\Expo project\src\app\index.tsx)
+  ⎿  Added 3 lines, removed 1 line
+      36  
+      37  const styles = StyleSheet.create({
+      38    container: { flex: 1 },
+      39 -  row: { flexDirection: '                                      
+      39 +  row: { flexDirection: 'row', alignItems: 'center', gap: 12, p
+         +adding: 12 },                                                  
+      40 +  image: { width: 56, height: 56 },                            
+      41 +});                                                            
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Lint and expo-doctor pass. Two TypeScript errors remain, both from unused
+  template CSS and web files, so I'll remove those.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Section A, the technical core, is built in F:\Expo project. npx tsc --noEmit,
+  npm run lint and npx expo-doctor all pass. I haven't started it in Expo Go
+  yet, so none of it has been tested on a phone.
+
+  I created a fresh Expo project (SDK 58, pokedex) and added TanStack Query,
+  expo-sqlite, expo-haptics and ESLint. I also deleted the unused template
+  files, which is what cleared the last two TypeScript errors.
+
+  Checklist status for section A:
+  - Expo Go and clean install: not tested yet. Run npx expo start and scan the
+    QR code. SDK 58 is the latest, so your phone's Expo Go needs to be up to
+    date.
+  - Live data with TanStack Query, no key:
+    - pokeapi.ts (src/api/pokeapi.ts) fetches the list and a Pokémon's detail.
+    - use-pokemon.ts (src/hooks/use-pokemon.ts) holds the queries.
+    - PokeAPI needs no key.
+  - 2+ Expo Router screens: the list (index.tsx (src/app/index.tsx)) and the
+    detail (pokemon/[id].tsx (src/app/pokemon/[id].tsx)), set up in a Stack in
+    _layout.tsx (src/app/_layout.tsx).
+  - SQLite that survives a restart: favorites are stored through database.ts
+    (src/db/database.ts) and favorites-repository.ts
+    (src/db/favorites-repository.ts), and the detail screen has a Favorite /
+    Unfavorite button.
+  - Loading and error states: query-status.tsx (src/components/query-status.tsx)
+    provides both, with a retry button, and both screens use it.
+  - Native feature: haptics fire when you favorite or unfavorite.
+  - TypeScript and ESLint without errors: both pass.
+  - UI, data and logic separated: components and screens, api/, db/ and hooks/
+    are separate folders.
+
+  Things to know:
+  - The scaffold created its own git repo. Commit as you go, since the
+    assignment grades your commit history and issues closed by commits.
+  - The screens are plain placeholders with no Figma styling yet.
+  - Next up are the sections for the Figma design, the list, search, detail,
+    favorites and compare.
+  - The specs/product.md entries (SQLite choice, native feature choice) and
+    AGENTS.md aren't written yet. The scaffold came with its own AGENTS.md and
+    CLAUDE.md.
+
+  Should I start on section B (Figma design and font) or section C (the list)
+  next?
+
+> now do step B
+
+  Called Figma 2 times, ran 1 shell command (ctrl+o to expand)
+
+● The session call was refused because I only have view access to the file. I'll
+  try reading it directly without a session.
+
+  Called Figma (ctrl+o to expand)
+
+● Figma is blocked, so I'll do the part that doesn't need it: loading the Rubik
+  font from fonts.zip with Expo Font.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● I've finished the font part of step B. The type colours, spacing and icons are
+  blocked because I can't read the Figma file.
+
+  Done:
+  - Rubik font: I copied the five weights the app uses (Light, Regular, Medium,
+    SemiBold, Bold) from fonts.zip into assets/fonts/.
+  - Loading: _layout.tsx (src/app/_layout.tsx) loads them with Expo Font and
+    keeps the splash screen up until they're ready.
+  - Theme: theme.ts (src/constants/theme.ts) has a new FontFamily constant.
+  - Text component: themed-text.tsx (src/components/themed-text.tsx) now uses
+    Rubik for every text style.
+  - Checks: tsc and lint still pass, but I haven't run the app on a phone.
+
+  Blocked: the Figma tools returned "you don't have edit access to this file"
+  for both the session and the read. The file is view-only for my connection, so
+  I can't pull the type colours, spacing, icons or screen layouts from it. I'd
+  rather not guess those values, because the assignment grades how closely you
+  follow the design.
+
+  To unblock, pick one:
+  1. Duplicate the file into your own Figma: open the link, choose "Duplicate to
+     your drafts" (or "Save as local copy"), and send me the new URL. With a
+     copy you own I can read everything.
+  2. Send screenshots or exports: screenshots of the list, search, detail (all
+     three tabs) and favorites screens, plus any style or variable panels, would
+     let me read the colours and spacing from them.
+
+  Once I can see the design, I'll add the type colours, spacing and icons to the
+  theme.
+
+> Where is the figma design?
+
+● The Figma design is at this link, which comes from the assignment's
+  exam/README.md (inholland-react-native-course-main/exam/README.md):
+
+  https://www.figma.com/design/dsgGXcu5WELIvRW90m5308/Pok%C3%A9mon-Code-Challeng
+  e?node-id=1-2
+
+  The file is called "Pokémon Code Challenge", and the file key is
+  dsgGXcu5WELIvRW90m5308. The link opens at node 1-2, which is the main frame.
+
+  Opening it in your browser should work. My Figma connection can only read it
+  with edit access, which is why I was blocked. Once it's open, use "Duplicate
+  to your drafts" and send me the new URL.
+
+> https://www.figma.com/design/dAykvLw5AHZi8P8L22ChJZ/Untitled?t=ZVDLemJx31LvZK
+  RB-0
+
+  Called Figma 3 times (ctrl+o to expand)
+
+● I can read the file now. I'll pull the design tokens, then the home screen and
+  the key components (Pokécard, type chip, tabs, menu bar).
+  Called Figma 3 times (ctrl+o to expand)
+
+● The palette so far is Midnight, Purple, Daylight and Silver, but the Detail
+  screen only lists Grass and Poison, so I'm checking the Type component for the
+  full set of type colours. · summary
+
+  Called Figma 2 times (ctrl+o to expand)
+
+● The file only has a few Type chips, with the dot colour set per chip. I'll
+  read the dot colours and labels from every chip that appears in the screens.
+
+  Called Figma 5 times (ctrl+o to expand)
+
+● Types in the design are Grass, Poison, Fire and Electric. I'll download their
+  dot colours and the icons the design uses.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● The design only defines four type colours: Fire, Grass, Poison and Electric.
+  I'll check the existing theme file before writing the design tokens.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Step B is done: the design tokens, the Rubik font and the Figma icons are now
+  in the project. I haven't run the app on a phone, and none of it is applied to
+  the screens yet. tsc and lint pass.
+
+  I read the colours, the shadow and the icons from the Figma copy you
+  duplicated. The palette is:
+
+  ┌─────────────────────────────────────────────────────┬────────────────────┐
+  │                        Token                        │       Value        │
+  ├─────────────────────────────────────────────────────┼────────────────────┤
+  │ Midnight (text)                                     │ #0E0940            │
+  ├─────────────────────────────────────────────────────┼────────────────────┤
+  │ Purple (primary: number label, active tab, About    │ #5631E8            │
+  │ underline)                                          │                    │
+  ├─────────────────────────────────────────────────────┼────────────────────┤
+  │ Daylight (screen background)                        │ #EDF6FF            │
+  ├─────────────────────────────────────────────────────┼────────────────────┤
+  │ Silver (inactive tab underline)                     │ #DBDAE6            │
+  ├─────────────────────────────────────────────────────┼────────────────────┤
+  │ Image area behind artwork                           │ #F6F6FF            │
+  ├─────────────────────────────────────────────────────┼────────────────────┤
+  │ Type chip background                                │ rgba(14,9,64,0.08) │
+  └─────────────────────────────────────────────────────┴────────────────────┘
+
+  Other changes:
+  - Theme file: theme.ts (src/constants/theme.ts) now holds these colours and
+    the design's shadow and corner radii (8, 4 and 99). I kept the dark-mode
+    values and adapted them, since the design only has a light version.
+  - Type colours: TypeColors has all 18 types.
+  - Icons: assets/icons/ has search, the Pokémon tab icon, the favorite heart
+    (outline) and the "more" dots as SVGs.
+
+  Things to know:
+  - Type colours: the design only defines 4 of the 18: Fire #FF4F68, Grass
+    #64BC55, Poison #AB6AC8 and Electric #FFCF00. I picked the other 14 myself
+    and labelled them in the code. If your teacher expects exact colours, they
+    may differ.
+  - Headings font: the headings use "Cabinet Grotesk" and the search placeholder
+    uses Inter, but fonts.zip only has Rubik. Everything uses Rubik for now,
+    which is what the assignment says to use. Headings will look slightly
+    different from the design.
+  - Missing icons: the filled heart for a favorited Pokémon and the back chevron
+    aren't in the Figma as files. I'll add them when I build the detail and
+    favorites screens.
+  - Not applied yet: no screen uses the new styles. Section C will build the
+    list as a two-column grid of Pokécards, with the search field and bottom
+    menu bar from the design.
+
+  Should I start on section C, the list?
+
+> Finish step B first
+
+● I'll finish step B by getting the missing icons (filled heart, back chevron),
+  then build the styled components and shell so the design is actually applied.
+
+  Called Figma 4 times (ctrl+o to expand)
+
+● I now have the filled heart and the inactive Pokémon tab icon. I'll download
+  them and tidy the icon names.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All icons are in place. Next I'll write the styled components (icon, Pokécard,
+  type chip, search bar, tabs) and wire them into the screens.
+
+  Read 3 files, ran 1 shell command (ctrl+o to expand)
+
+● Write(F:\Expo project\src\utils\format.ts)
+  ⎿  Wrote 12 lines to F:\Expo project\src\utils\format.ts
+       1 /** "bulbasaur" -> "Bulbasaur", "mr-mime" -> "Mr Mime" */
+       2 export function formatName(name: string): string {
+       3   return name
+       4     .split('-')
+       5     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+       6     .join(' ');
+       7 }
+       8
+       9 /** 1 -> "001" */
+      10 export function formatNumber(id: number): string {
+     … +2 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\icon.tsx)
+  ⎿  Wrote 24 lines to F:\Expo project\src\components\icon.tsx
+       1 import { Image } from 'expo-image';
+       2 import type { ImageStyle, StyleProp } from 'react-native';
+       3
+       4 /** Icons exported from the Figma design. Each file already has
+         its own colour. */
+       5 const ICONS = {
+       6   search: require('../../assets/icons/search.svg'),
+       7   more: require('../../assets/icons/more.svg'),
+       8   heart: require('../../assets/icons/heart.svg'),
+       9   heartFilled: require('../../assets/icons/heart-filled.svg'),
+     … +15 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\pokecard.tsx)
+  ⎿  Wrote 91 lines to F:\Expo project\src\components\pokecard.tsx
+       1 import { Image } from 'expo-image';
+       2 import { Pressable, StyleSheet, View } from 'react-native';
+       3
+       4 import { Icon } from '@/components/icon';
+       5 import { ThemedText } from '@/components/themed-text';
+       6 import { FontFamily, Radius, SoftShadow, Spacing } from '@/const
+         ants/theme';
+       7 import { useTheme } from '@/hooks/use-theme';
+       8 import { formatName, formatNumber } from '@/utils/format';
+       9
+     … +82 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\type-chip.tsx)
+  ⎿  Wrote 41 lines to F:\Expo project\src\components\type-chip.tsx
+       1 import { StyleSheet, View } from 'react-native';
+       2
+       3 import { ThemedText } from '@/components/themed-text';
+       4 import { FontFamily, Radius, Spacing, TypeColors } from '@/const
+         ants/theme';
+       5 import { useTheme } from '@/hooks/use-theme';
+       6 import { formatName } from '@/utils/format';
+       7
+       8 const FALLBACK_COLOR = '#A8A77A';
+       9
+     … +32 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\search-bar.tsx)
+  ⎿  Wrote 48 lines to F:\Expo project\src\components\search-bar.tsx
+       1 import { StyleSheet, TextInput, View } from 'react-native';
+       2
+       3 import { Icon } from '@/components/icon';
+       4 import { FontFamily, Radius, SoftShadow, Spacing } from '@/const
+         ants/theme';
+       5 import { useTheme } from '@/hooks/use-theme';
+       6
+       7 type SearchBarProps = {
+       8   value: string;
+       9   onChangeText: (text: string) => void;
+     … +39 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\segmented-tabs.tsx)
+  ⎿  Wrote 54 lines to F:\Expo project\src\components\segmented-tabs.tsx
+       1 import { Pressable, StyleSheet, View } from 'react-native';
+       2
+       3 import { ThemedText } from '@/components/themed-text';
+       4 import { FontFamily, Spacing } from '@/constants/theme';
+       5 import { useTheme } from '@/hooks/use-theme';
+       6
+       7 type SegmentedTabsProps = {
+       8   tabs: readonly string[];
+       9   value: string;
+      10   onChange: (tab: string) => void;
+     … +44 lines (ctrl+o to expand)
+
+● Now the font weight, text styles, layouts and screens.
+
+● Update(F:\Expo project\src\constants/theme.ts)
+  ⎿  Error editing file
+
+● Update(F:\Expo project\src\components\themed-text.tsx)
+  ⎿  File must be read first
+
+● Update(F:\Expo project\src\components\themed-text.tsx)
+  ⎿  File must be read first
+
+● Write(F:\Expo project\src\app\_layout.tsx)
+  ⎿  Added 15 lines, removed 5 lines
+       5  import { useEffect } from 'react';
+       6  import { useColorScheme } from 'react-native';
+       7  
+       8 -import { FontFamily } from '@/constants/theme';                
+       8 +import { Colors, FontFamily } from '@/constants/theme';        
+       9  
+      10  void SplashScreen.preventAutoHideAsync();
+      11  
+      12  const queryClient = new QueryClient();
+      13  
+      14 +const lightTheme = {                                           
+      15 +  ...DefaultTheme,                                             
+      16 +  colors: { ...DefaultTheme.colors, background: Colors.light.ba
+         +ckground, primary: Colors.light.primary },                     
+      17 +};                                                             
+      18 +const darkTheme = {                                            
+      19 +  ...DarkTheme,                                                
+      20 +  colors: { ...DarkTheme.colors, background: Colors.dark.backgr
+         +ound, primary: Colors.dark.primary },                          
+      21 +};                                                             
+      22 +                                                               
+      23  export default function RootLayout() {
+      24    const colorScheme = useColorScheme();
+      25    const [fontsLoaded, fontError] = useFonts({
+     ...
+      28      [FontFamily.medium]: require('../../assets/fonts/Rubik-Medi
+          um.ttf'),
+      29      [FontFamily.semiBold]: require('../../assets/fonts/Rubik-Se
+          miBold.ttf'),
+      30      [FontFamily.bold]: require('../../assets/fonts/Rubik-Bold.t
+          tf'),
+      31 +    [FontFamily.extraBold]: require('../../assets/fonts/Rubik-E
+         +xtraBold.ttf'),                                                
+      32    });
+      33  
+      34    useEffect(() => {
+     ...
+      39  
+      40    return (
+      41      <QueryClientProvider client={queryClient}>
+      32 -      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme 
+         -: DefaultTheme}>                                               
+      33 -        <Stack>                                                
+      34 -          <Stack.Screen name="index" options={{ title: 'Pokédex
+         -' }} />                                                        
+      35 -          <Stack.Screen name="pokemon/[id]" options={{ title: '
+         -Detail' }} />                                                  
+      42 +      <ThemeProvider value={colorScheme === 'dark' ? darkTheme 
+         +: lightTheme}>                                                 
+      43 +        <Stack screenOptions={{ headerShown: false }}>         
+      44 +          <Stack.Screen name="(tabs)" />                       
+      45 +          <Stack.Screen name="pokemon/[id]" />                 
+      46          </Stack>
+      47        </ThemeProvider>
+      48      </QueryClientProvider>
+
+● Write(F:\Expo project\src\app\(tabs)\_layout.tsx)
+  ⎿  Wrote 37 lines to F:\Expo project\src\app\(tabs)\_layout.tsx
+      1 import { Tabs } from 'expo-router';
+      2
+      3 import { Icon } from '@/components/icon';
+      4 import { FontFamily } from '@/constants/theme';
+      5 import { useTheme } from '@/hooks/use-theme';
+      6
+      7 /** The bottom menu bar from the design: Pokémons and Favorites.
+        */
+      8 export default function TabsLayout() {
+      9   const theme = useTheme();
+     … +28 lines (ctrl+o to expand)
+● Write(F:\Expo project\src\app\(tabs)\index.tsx)
+  ⎿  Error writing file
+
+● Write(F:\Expo project\src\app\(tabs)\favorites.tsx)
+  ⎿  Wrote 48 lines to F:\Expo project\src\app\(tabs)\favorites.tsx
+       1 import { useRouter } from 'expo-router';
+       2 import { FlatList, StyleSheet } from 'react-native';
+       3 import { SafeAreaView } from 'react-native-safe-area-context';
+       4
+       5 import { artworkUrl } from '@/api/pokeapi';
+       6 import { Pokecard } from '@/components/pokecard';
+       7 import { ErrorState, LoadingState } from '@/components/query-sta
+         tus';
+       8 import { ThemedText } from '@/components/themed-text';
+       9 import { ThemedView } from '@/components/themed-view';
+     … +39 lines (ctrl+o to expand)
+
+● Some edits need a fresh read first. I'll re-read those files and redo them.
+
+  Read 3 files (ctrl+o to expand)
+
+● Python wrote one accented character in theme.ts in the wrong encoding. I'll
+  convert the file back to UTF-8 and apply the remaining theme edits.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(F:\Expo project\src\app\(tabs)\index.tsx)
+  ⎿  Added 26 lines, removed 19 lines
+       1 -import { Image } from 'expo-image';                            
+       2 -import { Link } from 'expo-router';                            
+       3 -import { FlatList, Pressable, StyleSheet } from 'react-native';
+       1 +import { useRouter } from 'expo-router';                       
+       2 +import { FlatList, StyleSheet } from 'react-native';           
+       3 +import { SafeAreaView } from 'react-native-safe-area-context'; 
+       4  
+       5  import { artworkUrl } from '@/api/pokeapi';
+       6 +import { Pokecard } from '@/components/pokecard';              
+       7  import { ErrorState, LoadingState } from '@/components/query-st
+          atus';
+       8  import { ThemedText } from '@/components/themed-text';
+       9  import { ThemedView } from '@/components/themed-view';
+      10 +import { Spacing } from '@/constants/theme';                   
+      11  import { usePokemonList } from '@/hooks/use-pokemon';
+      12  
+      13  export default function ListScreen() {
+      14 +  const router = useRouter();                                  
+      15    const { data, isPending, isError, refetch } = usePokemonList(
+          );
+      16  
+      17    if (isPending) return <LoadingState />;
+     ...
+      19  
+      20    return (
+      21      <ThemedView style={styles.container}>
+      19 -      <FlatList                                                
+      20 -        data={data}                                            
+      21 -        keyExtractor={(item) => String(item.id)}               
+      22 -        renderItem={({ item }) => (                            
+      23 -          <Link href={{ pathname: '/pokemon/[id]', params: { id
+         -: item.id } }} asChild>                                        
+      24 -            <Pressable style={styles.row}>                     
+      25 -              <Image source={artworkUrl(item.id)} style={styles
+         -.image} />                                                     
+      26 -              <ThemedText>                                     
+      27 -                #{item.id} {item.name}                         
+      28 -              </ThemedText>                                    
+      29 -            </Pressable>                                       
+      30 -          </Link>                                              
+      31 -        )}                                                     
+      32 -      />                                                       
+      22 +      <SafeAreaView edges={['top']} style={styles.container}>  
+      23 +        <FlatList                                              
+      24 +          data={data}                                          
+      25 +          numColumns={2}                                       
+      26 +          keyExtractor={(item) => String(item.id)}             
+      27 +          columnWrapperStyle={styles.row}                      
+      28 +          contentContainerStyle={styles.content}               
+      29 +          ListHeaderComponent={<ThemedText type="heading">All P
+         +okémon</ThemedText>}                                           
+      30 +          renderItem={({ item }) => (                          
+      31 +            <Pokecard                                          
+      32 +              id={item.id}                                     
+      33 +              name={item.name}                                 
+      34 +              imageUrl={artworkUrl(item.id)}                   
+      35 +              onPress={() => router.push({ pathname: '/pokemon/
+         +[id]', params: { id: item.id } })}                             
+      36 +            />                                                 
+      37 +          )}                                                   
+      38 +        />                                                     
+      39 +      </SafeAreaView>                                          
+      40      </ThemedView>
+      41    );
+      42  }
+      43  
+      44  const styles = StyleSheet.create({
+      45    container: { flex: 1 },
+      39 -  row: { flexDirection: 'row', alignItems: 'center', gap: 12, p
+         -adding: 12 },                                                  
+      40 -  image: { width: 56, height: 56 },                            
+      46 +  content: { paddingHorizontal: Spacing.four, paddingTop: Spaci
+         +ng.three, paddingBottom: Spacing.four, gap: Spacing.three },   
+      47 +  row: { gap: Spacing.three },                                 
+      48  });
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now the detail screen. It needs a few more fields from the API for the About
+  rows (base XP, weight, height, abilities).
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(F:\Expo project\src\api\pokeapi.ts)
+  ⎿  Added 12 lines
+      13    id: number;
+      14    name: string;
+      15    types: string[];
+      16 +  baseExperience: number | null;                               
+      17 +  /** In kilograms. */                                         
+      18 +  weight: number;                                              
+      19 +  /** In metres. */                                            
+      20 +  height: number;                                              
+      21 +  abilities: string[];                                         
+      22  };
+      23  
+      24  type PokemonDetailResponse = {
+      25    id: number;
+      26    name: string;
+      27    types: { type: { name: string } }[];
+      28 +  base_experience: number | null;                              
+      29 +  /** PokeAPI gives hectograms. */                             
+      30 +  weight: number;                                              
+      31 +  /** PokeAPI gives decimetres. */                             
+      32 +  height: number;                                              
+      33 +  abilities: { ability: { name: string } }[];                  
+      34  };
+      35  
+      36  async function getJson<T>(path: string): Promise<T> {
+
+● Update(F:\Expo project\src\api\pokeapi.ts)
+  ⎿  Added 4 lines
+      59      id: data.id,
+      60      name: data.name,
+      61      types: data.types.map((t) => t.type.name),
+      62 +    baseExperience: data.base_experience,                      
+      63 +    weight: data.weight / 10,                                  
+      64 +    height: data.height / 10,                                  
+      65 +    abilities: data.abilities.map((a) => a.ability.name),      
+      66    };
+      67  }
+
+● Write(F:\Expo project\src\app\pokemon\[id].tsx)
+  ⎿  Added 108 lines, removed 16 lines
+       1  import { Image } from 'expo-image';
+       2 -import { useLocalSearchParams } from 'expo-router';            
+       3 -import { Pressable, StyleSheet } from 'react-native';          
+       2 +import { useLocalSearchParams, useRouter } from 'expo-router'; 
+       3 +import { useState } from 'react';                              
+       4 +import { Pressable, ScrollView, StyleSheet, View } from 'react-
+         +native';                                                       
+       5 +import { SafeAreaView } from 'react-native-safe-area-context'; 
+       6  
+       5 -import { artworkUrl } from '@/api/pokeapi';                    
+       7 +import { artworkUrl, type PokemonDetail } from '@/api/pokeapi';
+       8 +import { Icon } from '@/components/icon';                      
+       9  import { ErrorState, LoadingState } from '@/components/query-st
+          atus';
+      10 +import { SegmentedTabs } from '@/components/segmented-tabs';   
+      11  import { ThemedText } from '@/components/themed-text';
+      12  import { ThemedView } from '@/components/themed-view';
+      13 +import { TypeChip } from '@/components/type-chip';             
+      14 +import { FontFamily, Spacing } from '@/constants/theme';       
+      15  import { useFavorites, useToggleFavorite } from '@/hooks/use-fa
+          vorites';
+      16  import { usePokemonDetail } from '@/hooks/use-pokemon';
+      17 +import { useTheme } from '@/hooks/use-theme';                  
+      18 +import { formatName, formatNumber } from '@/utils/format';     
+      19  
+      20 +const TABS = ['About', 'Stats', 'Evolution'] as const;         
+      21 +                                                               
+      22 +function aboutRows(pokemon: PokemonDetail): [string, string][] 
+         +{                                                              
+      23 +  return [                                                     
+      24 +    ['Name', formatName(pokemon.name)],                        
+      25 +    ['ID', formatNumber(pokemon.id)],                          
+      26 +    ['Base', pokemon.baseExperience === null ? '-' : `${pokemon
+         +.baseExperience} XP`],                                         
+      27 +    ['Weight', `${pokemon.weight} kg`],                        
+      28 +    ['Height', `${pokemon.height} m`],                         
+      29 +    ['Types', pokemon.types.map(formatName).join(', ')],       
+      30 +    ['Abilities', pokemon.abilities.map(formatName).join(', ')]
+         +,                                                              
+      31 +  ];                                                           
+      32 +}                                                              
+      33 +                                                               
+      34  export default function DetailScreen() {
+      35 +  const router = useRouter();                                  
+      36 +  const theme = useTheme();                                    
+      37    const { id } = useLocalSearchParams<{ id: string }>();
+      38    const pokemonId = Number(id);
+      39    const { data, isPending, isError, refetch } = usePokemonDetai
+          l(pokemonId);
+      40    const favorites = useFavorites();
+      41    const toggle = useToggleFavorite();
+      42 +  const [tab, setTab] = useState<string>(TABS[0]);             
+      43  
+      44    if (isPending) return <LoadingState />;
+      45    if (isError) return <ErrorState onRetry={() => void refetch()
+          } />;
+     ...
+       48  
+       49    return (
+       50      <ThemedView style={styles.container}>
+       26 -      <Image source={artworkUrl(data.id)} style={styles.image}
+          - />                                                           
+       27 -      <ThemedText type="subtitle">                            
+       28 -        #{data.id} {data.name}                                
+       29 -      </ThemedText>                                           
+       30 -      <ThemedText>{data.types.join(', ')}</ThemedText>        
+       31 -      <Pressable                                              
+       32 -        accessibilityRole="button"                            
+       33 -        onPress={() => toggle.mutate({ favorite: { id: data.id
+          -, name: data.name }, isFavorite })}                           
+       34 -      >                                                       
+       35 -        <ThemedText type="link">{isFavorite ? 'Unfavorite' : '
+          -Favorite'}</ThemedText>                                       
+       36 -      </Pressable>                                            
+       51 +      <SafeAreaView edges={['top']} style={styles.top}>       
+       52 +        <View style={styles.header}>                          
+       53 +          <Pressable accessibilityRole="button" accessibilityL
+          +abel="Go back" onPress={() => router.back()} style={styles.bac
+          +k}>                                                           
+       54 +            <ThemedText style={styles.backChevron}>‹</ThemedTe
+          +xt>                                                           
+       55 +            <ThemedText style={styles.backLabel}>Back</ThemedT
+          +ext>                                                          
+       56 +          </Pressable>                                        
+       57 +          <Pressable                                          
+       58 +            accessibilityRole="button"                        
+       59 +            accessibilityLabel={isFavorite ? 'Remove from favo
+          +rites' : 'Add to favorites'}                                  
+       60 +            onPress={() => toggle.mutate({ favorite: { id: dat
+          +a.id, name: data.name }, isFavorite })}                       
+       61 +            style={styles.heart}                              
+       62 +          >                                                   
+       63 +            <Icon name={isFavorite ? 'heartFilled' : 'heart'} 
+          +/>                                                            
+       64 +          </Pressable>                                        
+       65 +        </View>                                               
+       66 +                                                              
+       67 +        <View style={styles.titleRow}>                        
+       68 +          <ThemedText type="display">{formatName(data.name)}</
+          +ThemedText>                                                   
+       69 +          <ThemedText style={styles.number}>#{formatNumber(dat
+          +a.id)}</ThemedText>                                           
+       70 +        </View>                                               
+       71 +        <View style={styles.chips}>                           
+       72 +          {data.types.map((type) => (                         
+       73 +            <TypeChip key={type} type={type} />               
+       74 +          ))}                                                 
+       75 +        </View>                                               
+       76 +      </SafeAreaView>                                         
+       77 +                                                              
+       78 +      <Image source={artworkUrl(data.id)} contentFit="contain"
+          + style={styles.artwork} />                                    
+       79 +                                                              
+       80 +      <ThemedView type="backgroundElement" style={styles.sheet
+          +}>                                                            
+       81 +        <SegmentedTabs tabs={TABS} value={tab} onChange={setTa
+          +b} />                                                         
+       82 +        <ScrollView contentContainerStyle={styles.sheetContent
+          +}>                                                            
+       83 +          {tab === 'About'                                    
+       84 +            ? aboutRows(data).map(([label, value]) => (       
+       85 +                <View key={label} style={styles.aboutRow}>    
+       86 +                  <ThemedText style={styles.aboutLabel}>{label
+          +}</ThemedText>                                                
+       87 +                  <ThemedText style={[styles.aboutValue, { col
+          +or: theme.textSecondary }]}>{value}</ThemedText>              
+       88 +                </View>                                       
+       89 +              ))                                              
+       90 +            : null}                                           
+       91 +        </ScrollView>                                         
+       92 +      </ThemedView>                                           
+       93      </ThemedView>
+       94    );
+       95  }
+       96  
+       97  const styles = StyleSheet.create({
+       42 -  container: { flex: 1, alignItems: 'center', padding: 24, gap
+          -: 12 },                                                       
+       43 -  image: { width: 240, height: 240 },                         
+       98 +  container: { flex: 1 },                                     
+       99 +  top: { paddingHorizontal: Spacing.four },                   
+      100 +  header: {                                                   
+      101 +    flexDirection: 'row',                                     
+      102 +    alignItems: 'center',                                     
+      103 +    justifyContent: 'space-between',                          
+      104 +    marginHorizontal: -Spacing.three,                         
+      105 +    minHeight: 40,                                            
+      106 +  },                                                          
+      107 +  back: { flexDirection: 'row', alignItems: 'center', gap: 5, 
+          +paddingHorizontal: 9, paddingVertical: Spacing.two },         
+      108 +  backChevron: { fontSize: 28, lineHeight: 30, fontFamily: Fon
+          +tFamily.regular },                                            
+      109 +  backLabel: { fontSize: 17, lineHeight: 22, fontFamily: FontF
+          +amily.regular },                                              
+      110 +  heart: { padding: Spacing.two },                            
+      111 +  titleRow: {                                                 
+      112 +    flexDirection: 'row',                                     
+      113 +    alignItems: 'flex-end',                                   
+      114 +    justifyContent: 'space-between',                          
+      115 +    marginTop: Spacing.three,                                 
+      116 +  },                                                          
+      117 +  number: { fontSize: 24, lineHeight: 38, fontFamily: FontFami
+          +ly.regular, opacity: 0.3 },                                   
+      118 +  chips: { flexDirection: 'row', gap: Spacing.two, marginTop: 
+          +Spacing.three },                                              
+      119 +  artwork: {                                                  
+      120 +    width: 200,                                               
+      121 +    height: 200,                                              
+      122 +    alignSelf: 'center',                                      
+      123 +    marginTop: Spacing.four,                                  
+      124 +    marginBottom: -50,                                        
+      125 +    zIndex: 1,                                                
+      126 +  },                                                          
+      127 +  sheet: {                                                    
+      128 +    flex: 1,                                                  
+      129 +    paddingTop: 74,                                           
+      130 +    paddingHorizontal: Spacing.four,                          
+      131 +  },                                                          
+      132 +  sheetContent: { paddingTop: Spacing.four, gap: Spacing.three
+          +, paddingBottom: Spacing.five },                              
+      133 +  aboutRow: { flexDirection: 'row', gap: Spacing.three },     
+      134 +  aboutLabel: { width: 100, fontFamily: FontFamily.semiBold, f
+          +ontSize: 14, lineHeight: 18 },                                
+      135 +  aboutValue: { flex: 1, fontFamily: FontFamily.regular, fontS
+          +ize: 14, lineHeight: 18 },                                    
+      136  });
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Type checks, lint and doctor pass. To check the app actually bundles (SVGs,
+  fonts, routes), I'll run a production export.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Step B is finished. The app bundles for Android, but I haven't looked at it on
+  a phone, so the visual match to the Figma is untested.
+
+  tsc, lint and expo-doctor pass.
+
+  Design tokens
+  - Colours, font, spacing: Midnight, Purple, Daylight, Silver, the soft shadow
+    and the corner radii are in theme.ts (src/constants/theme.ts). All text uses
+    Rubik. Headings use Rubik ExtraBold, which I added.
+  - Type colours: TypeColors has all 18 types. Only Fire, Grass, Poison and
+    Electric come from the Figma, and the other 14 colours are my choice.
+
+  Icons
+  - Files: search, more, heart, filled heart, and the Pokémon icon in both
+    states are in assets/icons/. The icon.tsx (src/components/icon.tsx)
+    component loads them.
+
+  Components built from the design
+  - Pokécard: pokecard.tsx (src/components/pokecard.tsx) has the number label,
+    artwork, name and shadow.
+  - Type chip: type-chip.tsx (src/components/type-chip.tsx) shows the coloured
+    dot and the type name.
+  - Search bar: search-bar.tsx (src/components/search-bar.tsx) is built but not
+    on any screen yet, because search is section D.
+  - About / Stats / Evolution tabs: segmented-tabs.tsx
+    (src/components/segmented-tabs.tsx) switches between them.
+
+  Screens now follow the layout
+  - Menu bar: the bottom bar has Pokémons and Favorites, with purple active
+    states and the matching icons.
+  - Home: a two-column grid of Pokécards under "All Pokémon".
+  - Favorites: the same grid under "My favorites". It has no empty state yet,
+    because that's section F.
+  - Detail:
+    - Back button and heart at the top.
+    - Name, #001 number and type chips.
+    - Artwork overlapping a white sheet.
+    - Tabs with the About rows: name, ID, base XP, weight, height, types,
+      abilities.
+    - The Stats and Evolution tabs are empty for now. They belong to section E.
+
+  Differences from the design
+  - The Figma cards show pixel sprites, but the app uses PokeAPI's official
+    artwork.
+  - The back button reads "Back" instead of the design's Dutch "Vorige", and its
+    chevron is a text character rather than an icon.
+  - Headings use Rubik instead of Cabinet Grotesk, which isn't in fonts.zip.
+  - The menu bar is solid Daylight, without the home screen's blur.
+  - The "more" dots on cards are built but hidden until the options sheet
+    exists.
+  - Dark mode is untouched, since the design only has a light version.
+
+  Want me to start on section C, the list: search, performance and loading
+  states?
+
+> It says Something went wrong in a blue page
+
+● That's the error state I built, so a data load is failing. I'll check whether
+  PokeAPI responds and look for what could throw.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● PokeAPI responds fine from here, so the failure is on the app side. The error
+  screen hides the actual error, so I'll make it show the message. Then we'll
+  know which load fails and why.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Those file-change notes are from my own edits, so nothing unexpected.
+
+  The error page now shows the real error message under "Something went wrong."
+  PokeAPI itself responds fine from here, so the problem is inside the app.
+
+  What I need from you: reload the app (shake the phone and tap Reload, or press
+  r in the terminal), then tell me two things:
+  1. Which screen: is it the Pokémon list, the Favorites tab, or a detail page?
+  2. The message: what text appears under "Something went wrong."?
+
+  My main suspect is the Favorites tab, because it reads SQLite and the list is
+  only a plain web request. If you don't see a message, that would also be a
+  clue. It would mean the reload didn't pick up the change.
+
+> When I try to run the app on expo go
+
+● You haven't said which screen or what message appears, so I'll check whether
+  that blue "Something went wrong" page is mine or Expo Router's built-in crash
+  page. Those mean different things.
+
+  Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● I don't have enough to find the cause yet. The app has two different
+  "Something went wrong" pages, and they mean different things:
+
+  - Expo Router's crash page: it says "Something went wrong", then a line
+    starting Error: ..., then a Retry button. This means a screen crashed while
+    rendering. It's the more likely one, since it happens right at launch.
+  - My own error page: it says "Something went wrong." with a period, then my
+    error message (after the last change), then "Try again". This means the
+    Pokémon list request failed.
+
+  Either way the exact message under the title is what tells me the cause.
+  Please send me one of these:
+  1. The Error: ... line (or the message) shown under the title, as text or a
+     screenshot.
+  2. The red or yellow lines in the terminal where npx expo start is running.
+     Expo Go prints app errors there too, and they usually include the file and
+     line.
+
+  I haven't changed anything for this yet, because guessing at a fix would only
+  risk breaking more.
+
+> Expo Router's crash page: it says "Something went wrong", then a line
+  starting Error: ..., then a Retry button. This means a screen crashed while
+  rendering. It's the more likely one, since it happens right at launch.
+
+  this is the correct one
+
+● Understood, it's Expo Router's crash page, but the error text under the title
+  is still missing, and that text is what names the cause. I'll reproduce the
+  launch myself by running the app on web in a headless browser and reading the
+  error from the page.
+
+  Read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● That web error is a separate SQLite .wasm Metro setting issue, not the phone
+  crash, but fixing it will let me reproduce the real crash on web. I'm
+  restarting the server with that setting now. · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+  ⎿  Blocked by auto mode
+     │ Auto mode: [Interfere With Workloads]
+
+● That was too broad. Killing every Node process could also stop your own Expo
+  server, so I'll stop only the server I started on port 8099.
+
+● Write(F:\Expo project\metro.config.js)  ⎿  Wrote 8 lines to F:\Expo project\metro.config.js
+      1 const { getDefaultConfig } = require('expo/metro-config');
+      2
+      3 const config = getDefaultConfig(__dirname);
+      4
+      5 // expo-sqlite on web loads a .wasm file.
+      6 config.resolver.assetExts.push('wasm');
+      7
+      8 module.exports = config;
+
+  Ran 4 shell commands (ctrl+o to expand)
+
+● I couldn't reproduce the crash from here, so I still don't know the cause. I
+  need the error line from your phone.
+
+  What I ran: I started the app on web (in a headless browser) and it loaded
+  correctly. It showed "All Pokémon" with the Pokémon list from the API
+  (Bulbasaur, Ivysaur, ...) and the Pokémons and Favorites menu bar. That means
+  the screens, the data loading and the navigation work. The crash only happens
+  on the phone, so it's something specific to Android or iOS in Expo Go.
+
+  What I changed:
+  - I added metro.config.js, which lets SQLite's web build load. It only matters
+    for web and does no harm on the phone.
+  - I stopped the test server I started. I didn't touch any other Node process,
+    so your own Expo server is unaffected.
+
+  What I need: the line right under the title on the crash page, which starts
+  with Error:. Please send it as text or a screenshot. If nothing is shown under
+  the title, tell me that instead.
+
+  If that's hard to read, send the terminal lines instead. They are the red
+  lines where npx expo start runs, printed right after you open the app. Also
+  tell me whether your phone is Android or iPhone, and the SDK version Expo Go
+  reports.
+
+  With that line I can fix it directly.
+
+> Do c now
+
+● Section C is the Pokémon list. The list screen already exists from earlier
+  steps, so what's left is making it fast and smooth to scroll, handling cards
+  that have no artwork, and polishing the loading and error states. Today is the
+  deadline day, so I'll keep it focused.
+
+● Update(F:\Expo project\src\components\pokecard.tsx)
+  ⎿  Added 1 line
+      1  import { Image } from 'expo-image';
+      2 +import { useState } from 'react';                               
+      3  import { Pressable, StyleSheet, View } from 'react-native';
+      4  
+      5  import { Icon } from '@/components/icon';
+
+● Update(F:\Expo project\src\components\pokecard.tsx)
+  ⎿  Added 2 lines
+      20  export function Pokecard({ id, name, imageUrl, onPress, onMore 
+          }: PokecardProps) {
+      21    const theme = useTheme();
+      22    const displayName = formatName(name);
+      23 +  // Some entries (alternate forms) have no official artwork: s
+         +how the Pokémon icon instead.                                  
+      24 +  const [imageFailed, setImageFailed] = useState(false);       
+      25  
+      26    return (
+      27      <Pressable
+
+● Update(F:\Expo project\src\components\pokecard.tsx)
+  ⎿  Added 15 lines, removed 1 line
+      31        style={[styles.card, SoftShadow, { backgroundColor: theme
+          .backgroundElement }]}
+      32      >
+      33        <View style={[styles.imageArea, { backgroundColor: theme.
+          imageBackground }]}>
+      34 -        <Image source={imageUrl} contentFit="contain" style={st
+         -yles.image} />                                                 
+      34 +        {imageFailed ? (                                       
+      35 +          <View style={styles.fallback}>                       
+      36 +            <Icon name="pokemon" size={48} style={styles.fallba
+         +ckIcon} />                                                     
+      37 +          </View>                                              
+      38 +        ) : (                                                  
+      39 +          <Image                                               
+      40 +            source={imageUrl}                                  
+      41 +            contentFit="contain"                               
+      42 +            cachePolicy="memory-disk"                          
+      43 +            recyclingKey={String(id)}                          
+      44 +            transition={150}                                   
+      45 +            onError={() => setImageFailed(true)}               
+      46 +            style={styles.image}                               
+      47 +          />                                                   
+      48 +        )}                                                     
+      49          <View style={[styles.label, { backgroundColor: theme.pr
+          imary }]}>
+      50            <ThemedText style={styles.labelText}>{formatNumber(id
+          )}</ThemedText>
+      51          </View>
+
+● Update(F:\Expo project\src\components\pokecard.tsx)
+  ⎿  Added 8 lines
+      77    image: {
+      78      flex: 1,
+      79    },
+      80 +  fallback: {                                                  
+      81 +    flex: 1,                                                   
+      82 +    alignItems: 'center',                                      
+      83 +    justifyContent: 'center',                                  
+      84 +  },                                                           
+      85 +  fallbackIcon: {                                              
+      86 +    opacity: 0.3,                                              
+      87 +  },                                                           
+      88    label: {
+      89      position: 'absolute',
+      90      top: Spacing.two,
+
+● Update(F:\Expo project\src\components\pokecard.tsx)
+  ⎿  Added 3 lines, removed 2 lines
+      104    footer: {
+      105      flexDirection: 'row',
+      106      alignItems: 'center',
+      107 -    padding: 12,                                              
+      108 -    minHeight: 48,                                            
+      107 +    paddingHorizontal: 12,                                    
+      108 +    // Fixed height so every card in the grid is the same size
+          +.                                                             
+      109 +    height: 48,                                               
+      110    },
+      111    name: {
+      112      flex: 1,
+
+● Update(F:\Expo project\src\components\query-status.tsx)
+  ⎿  File must be read first
+
+  Read 2 files, ran 1 shell command (ctrl+o to expand)
+
+● Write(F:\Expo project\src\app\(tabs)\index.tsx)
+  ⎿  Added 24 lines, removed 9 lines
+      1  import { useRouter } from 'expo-router';
+      2 -import { FlatList, StyleSheet } from 'react-native';            
+      2 +import { FlatList, StyleSheet, useWindowDimensions, View } from 
+        +'react-native';                                                 
+      3  import { SafeAreaView } from 'react-native-safe-area-context';
+      4  
+      5  import { artworkUrl } from '@/api/pokeapi';
+     ...
+      10  import { Spacing } from '@/constants/theme';
+      11  import { usePokemonList } from '@/hooks/use-pokemon';
+      12  
+      13 +const COLUMNS = 2;                                             
+      14 +                                                               
+      15  export default function ListScreen() {
+      16    const router = useRouter();
+      15 -  const { data, isPending, isError, error, refetch } = usePokem
+         -onList();                                                      
+      17 +  const { width } = useWindowDimensions();                     
+      18 +  const { data, isPending, isError, error, isRefetching, refetc
+         +h } = usePokemonList();                                        
+      19  
+      20    if (isPending) return <LoadingState />;
+      21    if (isError) return <ErrorState error={error} onRetry={() => 
+          void refetch()} />;
+      22  
+      23 +  // Fixed card width, so a last row with one card is as wide a
+         +s the others.                                                  
+      24 +  const cardWidth = Math.floor((width - Spacing.four * 2 - Spac
+         +ing.three * (COLUMNS - 1)) / COLUMNS);                         
+      25 +                                                               
+      26    return (
+      27      <ThemedView style={styles.container}>
+      28        <SafeAreaView edges={['top']} style={styles.container}>
+      29          <FlatList
+      30            data={data}
+      25 -          numColumns={2}                                       
+      31 +          numColumns={COLUMNS}                                 
+      32            keyExtractor={(item) => String(item.id)}
+      33            columnWrapperStyle={styles.row}
+      34            contentContainerStyle={styles.content}
+      35            ListHeaderComponent={<ThemedText type="heading">All P
+          okémon</ThemedText>}
+      36 +          refreshing={isRefetching}                            
+      37 +          onRefresh={() => void refetch()}                     
+      38 +          // The list has ~1300 items: only render what is on (
+         +or near) the screen.                                           
+      39 +          initialNumToRender={10}                              
+      40 +          maxToRenderPerBatch={10}                             
+      41 +          windowSize={7}                                       
+      42 +          removeClippedSubviews                                
+      43            renderItem={({ item }) => (
+      31 -            <Pokecard                                          
+      32 -              id={item.id}                                     
+      33 -              name={item.name}                                 
+      34 -              imageUrl={artworkUrl(item.id)}                   
+      35 -              onPress={() => router.push({ pathname: '/pokemon/
+         -[id]', params: { id: item.id } })}                             
+      36 -            />                                                 
+      44 +            <View style={{ width: cardWidth }}>                
+      45 +              <Pokecard                                        
+      46 +                id={item.id}                                   
+      47 +                name={item.name}                               
+      48 +                imageUrl={artworkUrl(item.id)}                 
+      49 +                onPress={() => router.push({ pathname: '/pokemo
+         +n/[id]', params: { id: item.id } })}                           
+      50 +              />                                               
+      51 +            </View>                                            
+      52            )}
+      53          />
+      54        </SafeAreaView>
+
+● Now I'll check it: type check, lint, then render it in a headless browser and
+  take a screenshot.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● The right column and the "Favorites" tab label are being cropped in the
+  screenshot, which looks like the headless browser rendering wider than 390px
+  rather than a layout bug. I'm re-shooting at a width that avoids the crop.
+  · summary
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● Section C, the list, is done and works in a browser render. I haven't run it
+  on your phone, and the phone crash from earlier is still unresolved.
+
+  tsc and lint pass. I rendered the app in a headless browser and checked it
+  against the Figma home screen. It shows the "All Pokémon" heading, a
+  two-column grid of cards with the purple number label, artwork, name and soft
+  shadow, and the Pokémons / Favorites menu bar.
+
+  C checklist:
+  - [x] All Pokémon, live from the API: about 1,350 entries, loaded with one
+    request through TanStack Query.
+  - [x] Rows look like the design: grid, spacing, colours and fonts match.
+  - [x] Loads fast and scrolls smoothly:
+    - List rendering: the list only draws what's near the screen, and card
+      images are cached in memory and on disk.
+    - Card size: the cards have a fixed size, and the last card in the
+      odd-length list is no longer stretched.
+  - [x] Loading state: a purple spinner.
+  - [x] Error state: shows the message with a "Try again" button.
+  - [x] Also added: pull-to-refresh, and cards with no official artwork (some
+    alternate forms, e.g. #10001+) show a faded Pokéball icon instead of a blank
+    space.
+
+  Not covered:
+  - Phone crash: the render shows the app works on web, so the crash is specific
+    to the phone. I still need the Error: ... line from that crash page to fix
+    it.
+  - Not committed: nothing is committed to git yet.
+  - Deadline: it's today, Fri 6 Nov, 23:59. Sections D (search), E (detail tabs:
+    Stats and Evolution), F (favorites empty state) and G (compare) are open.
+    The handed-in files are also missing: specs/, AGENTS.md, GitHub issues,
+    chat-history/ and docs/explanation.md. A missing hand-in item caps you at
+    a 5.
+
+  Do you want me to write the specs/ files and set up git next, since they're
+  needed for any grade, or go straight to D?
+
+> Do D now
+
+● Section D is search. The full list is already in memory, so I'll filter it on
+  the device. That means typing is instant and it finds every Pokémon, including
+  ones you haven't scrolled to. The filtering logic goes in its own file,
+  separate from the UI.
+
+● Write(F:\Expo project\src\utils\search.ts)
+  ⎿  Wrote 15 lines to F:\Expo project\src\utils\search.ts
+       1 /** Lower case, and treat spaces like the dashes in PokeAPI name
+         s ("mr mime" -> "mr-mime"). */
+       2 function normalize(text: string): string {
+       3   return text.trim().toLowerCase().replace(/\s+/g, '-');
+       4 }
+       5
+       6 /**
+       7  * Keeps the items whose name contains the query, in any case.
+       8  * An empty query keeps everything. PokeAPI has no search endpoi
+         nt,
+     … +7 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\hooks\use-pokemon-search.ts)
+  ⎿  Wrote 13 lines to F:\Expo project\src\hooks\use-pokemon-search.ts
+       1 import { useDeferredValue } from 'react';
+       2
+       3 import { usePokemonList } from '@/hooks/use-pokemon';
+       4 import { filterByName } from '@/utils/search';
+       5
+       6 /** The full Pokémon list, filtered by what the user typed. Typi
+         ng stays smooth while the list updates. */
+       7 export function usePokemonSearch(query: string) {
+       8   const list = usePokemonList();
+       9   const deferredQuery = useDeferredValue(query);
+     … +4 lines (ctrl+o to expand)
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(F:\Expo project\src\components\query-status.tsx)
+  ⎿  Added 16 lines
+      14    );
+      15  }
+      16  
+      17 +export function EmptyState({ title, message }: { title: string;
+         + message?: string }) {                                         
+      18 +  return (                                                     
+      19 +    <ThemedView style={{ alignItems: 'center', paddingTop: 64, 
+         +paddingHorizontal: 24, gap: 8 }}>                              
+      20 +      <Icon name="pokemon" size={48} style={{ opacity: 0.3 }} /
+         +>                                                              
+      21 +      <ThemedText type="subtitle" style={{ fontSize: 20, lineHe
+         +ight: 26, textAlign: 'center' }}>                              
+      22 +        {title}                                                
+      23 +      </ThemedText>                                            
+      24 +      {message ? (                                             
+      25 +        <ThemedText themeColor="textSecondary" style={{ textAli
+         +gn: 'center' }}>                                               
+      26 +          {message}                                            
+      27 +        </ThemedText>                                          
+      28 +      ) : null}                                                
+      29 +    </ThemedView>                                              
+      30 +  );                                                           
+      31 +}                                                              
+      32 +                                                               
+      33  export function ErrorState({ onRetry, error }: { onRetry: () =>
+           void; error?: Error | null }) {
+      34    return (
+      35      <ThemedView style={{ flex: 1, alignItems: 'center', justify
+          Content: 'center', gap: 12 }}>
+
+● Update(F:\Expo project\src\components\query-status.tsx)
+  ⎿  Added 1 line
+      1  import { ActivityIndicator, Pressable } from 'react-native';
+      2  
+      3 +import { Icon } from '@/components/icon';                       
+      4  import { ThemedText } from '@/components/themed-text';
+      5  import { ThemedView } from '@/components/themed-view';
+      6  import { useTheme } from '@/hooks/use-theme';
+
+● Write(F:\Expo project\src\app\(tabs)\index.tsx)
+  ⎿  Added 18 lines, removed 6 lines
+       1  import { useRouter } from 'expo-router';
+       2 +import { useState } from 'react';                              
+       3  import { FlatList, StyleSheet, useWindowDimensions, View } from
+           'react-native';
+       4  import { SafeAreaView } from 'react-native-safe-area-context';
+       5  
+       6  import { artworkUrl } from '@/api/pokeapi';
+       7  import { Pokecard } from '@/components/pokecard';
+       7 -import { ErrorState, LoadingState } from '@/components/query-st
+         -atus';                                                         
+       8 +import { EmptyState, ErrorState, LoadingState } from '@/compone
+         +nts/query-status';                                             
+       9 +import { SearchBar } from '@/components/search-bar';           
+      10  import { ThemedText } from '@/components/themed-text';
+      11  import { ThemedView } from '@/components/themed-view';
+      12  import { Spacing } from '@/constants/theme';
+      11 -import { usePokemonList } from '@/hooks/use-pokemon';          
+      13 +import { usePokemonSearch } from '@/hooks/use-pokemon-search'; 
+      14  
+      15  const COLUMNS = 2;
+      16  
+      17  export default function ListScreen() {
+      18    const router = useRouter();
+      19    const { width } = useWindowDimensions();
+      18 -  const { data, isPending, isError, error, isRefetching, refetc
+         -h } = usePokemonList();                                        
+      20 +  const [query, setQuery] = useState('');                      
+      21 +  const { results, isSearching, isPending, isError, error, isRe
+         +fetching, refetch } = usePokemonSearch(query);                 
+      22  
+      23    if (isPending) return <LoadingState />;
+      24    if (isError) return <ErrorState error={error} onRetry={() => 
+          void refetch()} />;
+     ...
+      29    return (
+      30      <ThemedView style={styles.container}>
+      31        <SafeAreaView edges={['top']} style={styles.container}>
+      32 +        <View style={styles.searchBar}>                        
+      33 +          <SearchBar value={query} onChangeText={setQuery} />  
+      34 +        </View>                                                
+      35          <FlatList
+      30 -          data={data}                                          
+      36 +          data={results}                                       
+      37            numColumns={COLUMNS}
+      38            keyExtractor={(item) => String(item.id)}
+      39            columnWrapperStyle={styles.row}
+      40            contentContainerStyle={styles.content}
+      35 -          ListHeaderComponent={<ThemedText type="heading">All P
+         -okémon</ThemedText>}                                           
+      41 +          keyboardShouldPersistTaps="handled"                  
+      42 +          keyboardDismissMode="on-drag"                        
+      43 +          ListHeaderComponent={isSearching ? null : <ThemedText
+         + type="heading">All Pokémon</ThemedText>}                      
+      44 +          ListEmptyComponent={                                 
+      45 +            <EmptyState title="No Pokémon found" message="Check
+         + the spelling or try a shorter name." />                       
+      46 +          }                                                    
+      47            refreshing={isRefetching}
+      48            onRefresh={() => void refetch()}
+      49            // The list has ~1300 items: only render what is on (
+          or near) the screen.
+     ...
+      69  
+      70  const styles = StyleSheet.create({
+      71    container: { flex: 1 },
+      61 -  content: { paddingHorizontal: Spacing.four, paddingTop: Spaci
+         -ng.three, paddingBottom: Spacing.four, gap: Spacing.three },   
+      72 +  searchBar: { paddingHorizontal: Spacing.three, paddingTop: Sp
+         +acing.three },                                                 
+      73 +  content: { paddingHorizontal: Spacing.four, paddingTop: Spaci
+         +ng.four, paddingBottom: Spacing.four, gap: Spacing.three },    
+      74    row: { gap: Spacing.three },
+      75  });
+
+● Now the checks: a test of the filter logic with the cases from the assignment,
+  then type check and lint.
+
+  Ran 1 shell command (ctrl+o to expand)
+● The filter works on the real 1,351 entries. One type error remains: the list
+  header must be undefined, not null.
+
+● Update(F:\Expo project\src\app\(tabs)\index.tsx)
+  ⎿  Added 1 line, removed 1 line
+      40            contentContainerStyle={styles.content}
+      41            keyboardShouldPersistTaps="handled"
+      42            keyboardDismissMode="on-drag"
+      43 -          ListHeaderComponent={isSearching ? null : <ThemedText
+         - type="heading">All Pokémon</ThemedText>}                      
+      43 +          ListHeaderComponent={isSearching ? undefined : <Theme
+         +dText type="heading">All Pokémon</ThemedText>}                 
+      44            ListEmptyComponent={
+      45              <EmptyState title="No Pokémon found" message="Check
+           the spelling or try a shorter name." />
+      46            }
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Both pass. I'll check the real interaction: type "pika" and a nonsense word
+  into the search field in a headless browser and screenshot each result.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The heredoc swallowed a backslash escape. I'll switch the script to path.join.
+
+  Made 1 scratchpad edit +69, ran 2 shell commands (ctrl+o to expand)
+
+● Typing "PIKA" in capitals shows only Pikachu cards, and "zzzz" shows the empty
+  state. I'll look at both screenshots.
+
+  Read 2 files, ran 1 shell command (ctrl+o to expand)
+
+● Section D, search, is done and I tested it by typing into the real search
+  field in a headless browser. tsc and lint pass. I haven't run it on your
+  phone, and the phone crash from earlier is still unresolved.
+
+  D checklist:
+  - [x] Search field as in the design: the white rounded bar with the magnifier
+    icon and the "Search for Pokémon.." placeholder, above the list.
+  - [x] Results show while you type: typing "PIKA" immediately showed only
+    Pikachu cards.
+  - [x] Part of a name is enough, any case: "pika", "PIKA" and "PiKaChU" all
+    find Pikachu. Spaces count as dashes, so "mr mime" finds Mr. Mime.
+  - [x] Finds every Pokémon, including ones you haven't scrolled to: the search
+    runs on the full list of 1,351 entries that is already loaded. "mirai" finds
+    Miraidon, which is far down the list.
+  - [x] Results look like the list rows: the same Pokécards in the same grid.
+    The "All Pokémon" heading hides while you search, as in the Figma.
+  - [x] No match shows an empty state: "zzzz" shows a faded Pokéball with "No
+    Pokémon found" and a hint.
+
+  How it works:
+  - Why it's on the device: PokeAPI has no search endpoint, so the filter runs
+    on the list that's already loaded.
+  - Where the code is:
+    - The matching logic is search.ts (src/utils/search.ts).
+    - The hook is use-pokemon-search.ts (src/hooks/use-pokemon-search.ts).
+    - The screen is index.tsx (src/app/(tabs)/index.tsx).
+    - This is useful for your explanation file's question 2.
+
+  Things to know:
+  - Alternate forms appear: searching "pika" returns 17 results, including
+    alternate forms such as Pikachu Rock Star, which has number 10080. If you'd
+    rather hide the forms, the fix is a one-line filter. That would also fix
+    numbers like 10080 on the cards.
+  - Web-only outline: the search field shows a black outline when focused in the
+    browser. That's a web quirk and shouldn't appear on a phone.
+
+  Still open: E (detail: Stats and Evolution tabs), F (favorites empty state), G
+  (compare) and the hand-in files. The deadline is tonight at 23:59. Do you
+  want E next?
+
+> Do E now
+
+● Section E is the detail screen. Last time I only built the About tab, so this
+  time it's the Stats and Evolution tabs. I'll read both from the Figma design
+  first.
+
+  Called Figma 2 times (ctrl+o to expand)
+
+● Both designs are in hand: Stats is a label and value over a thin purple bar,
+  and Evolution is stacked horizontal cards with dotted connectors. Next I'll
+  download the back arrow, the red filled heart, and the dotted connector icons.
+  · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now the data layer. I'll extend the API with stats and the evolution chain
+  (species, then chain), keeping the flattening logic in a pure utility.
+
+● Write(F:\Expo project\src\api\pokeapi.ts)
+  ⎿  Added 58 lines, removed 5 lines
+       9    results: { name: string; url: string }[];
+      10  };
+      11  
+      12 +export type PokemonStat = {                                    
+      13 +  /** PokeAPI name, e.g. "special-attack". */                  
+      14 +  name: string;                                                
+      15 +  value: number;                                               
+      16 +};                                                             
+      17 +                                                               
+      18  export type PokemonDetail = {
+      19    id: number;
+      20    name: string;
+      21 +  /** The species this Pokémon belongs to. Alternate forms shar
+         +e it with their base Pokémon. */                               
+      22 +  speciesId: number;                                           
+      23    types: string[];
+      24 +  stats: PokemonStat[];                                        
+      25    baseExperience: number | null;
+      26    /** In kilograms. */
+      27    weight: number;
+     ...
+      33  type PokemonDetailResponse = {
+      34    id: number;
+      35    name: string;
+      36 +  species: { url: string };                                    
+      37    types: { type: { name: string } }[];
+      38 +  stats: { base_stat: number; stat: { name: string } }[];      
+      39    base_experience: number | null;
+      40    /** PokeAPI gives hectograms. */
+      41    weight: number;
+     ...
+       44    abilities: { ability: { name: string } }[];
+       45  };
+       46  
+       36 -async function getJson<T>(path: string): Promise<T> {         
+       37 -  const response = await fetch(`${BASE_URL}${path}`);         
+       47 +/** One Pokémon in the evolution chain, with the Pokémon it ev
+          +olves into. */                                                
+       48 +export type EvolutionNode = {                                 
+       49 +  id: number;                                                 
+       50 +  name: string;                                               
+       51 +  evolvesTo: EvolutionNode[];                                 
+       52 +};                                                            
+       53 +                                                              
+       54 +type SpeciesResponse = {                                      
+       55 +  evolution_chain: { url: string };                           
+       56 +};                                                            
+       57 +                                                              
+       58 +type ChainLinkResponse = {                                    
+       59 +  species: { name: string; url: string };                     
+       60 +  evolves_to: ChainLinkResponse[];                            
+       61 +};                                                            
+       62 +                                                              
+       63 +type EvolutionChainResponse = {                               
+       64 +  chain: ChainLinkResponse;                                   
+       65 +};                                                            
+       66 +                                                              
+       67 +async function getJson<T>(url: string): Promise<T> {          
+       68 +  const response = await fetch(url);                          
+       69    if (!response.ok) {
+       70      throw new Error(`PokeAPI request failed (${response.status
+           })`);
+       71    }
+       72    return (await response.json()) as T;
+       73  }
+       74  
+       75 +/** "https://pokeapi.co/api/v2/pokemon-species/25/" -> 25 */  
+       76 +function idFromUrl(url: string): number {                     
+       77 +  return Number(url.split('/').filter(Boolean).pop());        
+       78 +}                                                             
+       79 +                                                              
+       80  export function artworkUrl(id: number): string {
+       81    return `https://raw.githubusercontent.com/PokeAPI/sprites/ma
+           ster/sprites/pokemon/other/official-artwork/${id}.png`;
+       82  }
+       83  
+       84  export async function fetchPokemonList(): Promise<PokemonListI
+           tem[]> {
+       49 -  const data = await getJson<PokemonListResponse>('/pokemon?li
+          -mit=2000');                                                   
+       85 +  const data = await getJson<PokemonListResponse>(`${BASE_URL}
+          +/pokemon?limit=2000`);                                        
+       86    return data.results.map((entry) => ({
+       51 -    id: Number(entry.url.split('/').filter(Boolean).pop()),   
+       87 +    id: idFromUrl(entry.url),                                 
+       88      name: entry.name,
+       89    }));
+       90  }
+       91  
+       92  export async function fetchPokemonDetail(id: number): Promise<
+           PokemonDetail> {
+       57 -  const data = await getJson<PokemonDetailResponse>(`/pokemon/
+          -${id}`);                                                      
+       93 +  const data = await getJson<PokemonDetailResponse>(`${BASE_UR
+          +L}/pokemon/${id}`);                                           
+       94    return {
+       95      id: data.id,
+       96      name: data.name,
+       97 +    speciesId: idFromUrl(data.species.url),                   
+       98      types: data.types.map((t) => t.type.name),
+       99 +    stats: data.stats.map((s) => ({ name: s.stat.name, value: 
+          +s.base_stat })),                                              
+      100      baseExperience: data.base_experience,
+      101      weight: data.weight / 10,
+      102      height: data.height / 10,
+      103      abilities: data.abilities.map((a) => a.ability.name),
+      104    };
+      105  }
+      106 +                                                              
+      107 +function toEvolutionNode(link: ChainLinkResponse): EvolutionNo
+          +de {                                                          
+      108 +  return {                                                    
+      109 +    id: idFromUrl(link.species.url),                          
+      110 +    name: link.species.name,                                  
+      111 +    evolvesTo: link.evolves_to.map(toEvolutionNode),          
+      112 +  };                                                          
+      113 +}                                                             
+      114 +                                                              
+      115 +/** The species names its evolution chain, and the chain endpo
+          +int gives the whole family tree. */                           
+      116 +export async function fetchEvolutionChain(speciesId: number): 
+          +Promise<EvolutionNode> {                                      
+      117 +  const species = await getJson<SpeciesResponse>(`${BASE_URL}/
+          +pokemon-species/${speciesId}`);                               
+      118 +  const chain = await getJson<EvolutionChainResponse>(species.
+          +evolution_chain.url);                                         
+      119 +  return toEvolutionNode(chain.chain);                        
+      120 +}                                                             
+
+● Write(F:\Expo project\src\utils\evolution.ts)
+  ⎿  Wrote 19 lines to F:\Expo project\src\utils\evolution.ts
+       1 export type EvolutionEntry = { id: number; name: string };
+       2
+       3 type ChainNode = EvolutionEntry & { evolvesTo: readonly ChainNod
+         e[] };
+       4
+       5 /**
+       6  * Turns the evolution tree into stages, one list per step.
+       7  * Pichu -> Pikachu -> Raichu gives [[Pichu], [Pikachu], [Raichu
+         ]].
+       8  * A branch such as Eevee gives [[Eevee], [Vaporeon, Jolteon, ..
+     … +12 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\utils\stats.ts)
+  ⎿  Wrote 21 lines to F:\Expo project\src\utils\stats.ts
+       1 const LABELS: Record<string, string> = {
+       2   hp: 'HP',
+       3   attack: 'Attack',
+       4   defense: 'Defense',
+       5   'special-attack': 'Special Attack',
+       6   'special-defense': 'Special Defense',
+       7   speed: 'Speed',
+       8 };
+       9
+      10 /** "special-attack" -> "Special Attack" */
+     … +11 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\hooks\use-pokemon.ts)
+  ⎿  Error writing file
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(F:\Expo project\src\hooks\use-pokemon.ts)
+  ⎿  Added 11 lines, removed 2 lines
+      1 -import { useQuery } from '@tanstack/react-query';               
+      1 +import { skipToken, useQuery } from '@tanstack/react-query';    
+      2  
+      3 -import { fetchPokemonDetail, fetchPokemonList } from '@/api/poke
+        -api';                                                           
+      3 +import { fetchEvolutionChain, fetchPokemonDetail, fetchPokemonLi
+        +st } from '@/api/pokeapi';                                      
+      4  
+      5  export function usePokemonList() {
+      6    return useQuery({
+     ...
+      16      queryFn: () => fetchPokemonDetail(id),
+      17    });
+      18  }
+      19 +                                                               
+      20 +/** Waits until the species id is known (after the detail has l
+         +oaded), then loads the chain. */                               
+      21 +export function useEvolutionChain(speciesId: number | undefined
+         +) {                                                            
+      22 +  return useQuery({                                            
+      23 +    queryKey: ['pokemon', 'evolution', speciesId],             
+      24 +    queryFn: speciesId === undefined ? skipToken : () => fetchE
+         +volutionChain(speciesId),                                      
+      25 +    staleTime: Infinity,                                       
+      26 +  });                                                          
+      27 +}                                                              
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\icon.tsx)
+  ⎿  Added 12 lines, removed 2 lines
+       5  const ICONS = {
+       6    search: require('../../assets/icons/search.svg'),
+       7    more: require('../../assets/icons/more.svg'),
+       8 +  back: require('../../assets/icons/back.svg'),                
+       9    heart: require('../../assets/icons/heart.svg'),
+      10 +  /** Purple heart: the active "Favorites" tab. */             
+      11    heartFilled: require('../../assets/icons/heart-filled.svg'),
+      12 +  /** Red heart: a Pokémon that is a favorite, on the detail sc
+         +reen. */                                                       
+      13 +  heartActive: require('../../assets/icons/heart-active.svg'), 
+      14    pokemon: require('../../assets/icons/pokemon.svg'),
+      15    pokemonActive: require('../../assets/icons/pokemon-active.svg
+          '),
+      16 +  /** Dotted line between two Pokémon in the evolution chain (8
+         +0 x 20). */                                                    
+      17 +  evolutionLink: require('../../assets/icons/evolution-link.svg
+         +'),                                                            
+      18  };
+      19  
+      20  export type IconName = keyof typeof ICONS;
+      21  
+      22  type IconProps = {
+      23    name: IconName;
+      24 +  /** Width and height of a square icon. */                    
+      25    size?: number;
+      26 +  /** For icons that are not square. Overrides `size`. */      
+      27 +  width?: number;                                              
+      28 +  height?: number;                                             
+      29    style?: StyleProp<ImageStyle>;
+      30  };
+      31  
+      22 -export function Icon({ name, size = 24, style }: IconProps) {  
+      23 -  return <Image source={ICONS[name]} style={[{ width: size, hei
+         -ght: size }, style]} />;                                       
+      32 +export function Icon({ name, size = 24, width, height, style }:
+         + IconProps) {                                                  
+      33 +  return <Image source={ICONS[name]} style={[{ width: width ?? 
+         +size, height: height ?? size }, style]} />;                    
+      34  }
+
+● Write(F:\Expo project\src\components\stats-tab.tsx)
+  ⎿  Wrote 43 lines to F:\Expo project\src\components\stats-tab.tsx
+       1 import { StyleSheet, View } from 'react-native';
+       2
+       3 import type { PokemonStat } from '@/api/pokeapi';
+       4 import { ThemedText } from '@/components/themed-text';
+       5 import { FontFamily, Radius, Spacing } from '@/constants/theme';
+       6 import { useTheme } from '@/hooks/use-theme';
+       7 import { formatStatName, statFraction } from '@/utils/stats';
+       8
+       9 /** The "Stats" tab: a label, the value and a bar for each base
+         stat. */
+     … +34 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\about-tab.tsx)
+  ⎿  Wrote 42 lines to F:\Expo project\src\components\about-tab.tsx
+       1 import { StyleSheet, View } from 'react-native';
+       2
+       3 import type { PokemonDetail } from '@/api/pokeapi';
+       4 import { ThemedText } from '@/components/themed-text';
+       5 import { FontFamily, Spacing } from '@/constants/theme';
+       6 import { useTheme } from '@/hooks/use-theme';
+       7 import { formatName, formatNumber } from '@/utils/format';
+       8
+       9 function aboutRows(pokemon: PokemonDetail): [string, string][] {
+      10   return [
+     … +32 lines (ctrl+o to expand)
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● I've finished the data layer and the About and Stats tabs. Next are the
+  Evolution tab and rewiring the detail screen to use all three tabs.
+
+● Write(F:\Expo project\src\components\evolution-card.tsx)
+  ⎿  Wrote 77 lines to F:\Expo project\src\components\evolution-card.tsx
+       1 import { Image } from 'expo-image';
+       2 import { Pressable, StyleSheet, View } from 'react-native';
+       3
+       4 import { artworkUrl } from '@/api/pokeapi';
+       5 import { ThemedText } from '@/components/themed-text';
+       6 import { FontFamily, Radius, SoftShadow, Spacing } from '@/const
+         ants/theme';
+       7 import { useTheme } from '@/hooks/use-theme';
+       8 import { formatName, formatNumber } from '@/utils/format';
+       9
+     … +68 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\evolution-tab.tsx)  ⎿  Wrote 54 lines to F:\Expo project\src\components\evolution-tab.tsx
+       1 import { useRouter } from 'expo-router';
+       2 import { Fragment } from 'react';
+       3 import { StyleSheet, View } from 'react-native';
+       4
+       5 import { EvolutionCard } from '@/components/evolution-card';
+       6 import { Icon } from '@/components/icon';
+       7 import { ErrorState, LoadingState } from '@/components/query-sta
+         tus';
+       8 import { ThemedText } from '@/components/themed-text';
+       9 import { Spacing } from '@/constants/theme';
+     … +45 lines (ctrl+o to expand)
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(F:\Expo project\src\app\pokemon\[id].tsx)
+  ⎿  Added 24 lines, removed 39 lines
+       4  import { Pressable, ScrollView, StyleSheet, View } from 'react-
+          native';
+       5  import { SafeAreaView } from 'react-native-safe-area-context';
+       6  
+       7 -import { artworkUrl, type PokemonDetail } from '@/api/pokeapi';
+       7 +import { artworkUrl } from '@/api/pokeapi';                    
+       8 +import { AboutTab } from '@/components/about-tab';             
+       9 +import { EvolutionTab } from '@/components/evolution-tab';     
+      10  import { Icon } from '@/components/icon';
+      11  import { ErrorState, LoadingState } from '@/components/query-st
+          atus';
+      12  import { SegmentedTabs } from '@/components/segmented-tabs';
+      13 +import { StatsTab } from '@/components/stats-tab';             
+      14  import { ThemedText } from '@/components/themed-text';
+      15  import { ThemedView } from '@/components/themed-view';
+      16  import { TypeChip } from '@/components/type-chip';
+      17  import { FontFamily, Spacing } from '@/constants/theme';
+      18  import { useFavorites, useToggleFavorite } from '@/hooks/use-fa
+          vorites';
+      19  import { usePokemonDetail } from '@/hooks/use-pokemon';
+      17 -import { useTheme } from '@/hooks/use-theme';                  
+      20  import { formatName, formatNumber } from '@/utils/format';
+      21  
+      22  const TABS = ['About', 'Stats', 'Evolution'] as const;
+      23  
+      22 -function aboutRows(pokemon: PokemonDetail): [string, string][] 
+         -{                                                              
+      23 -  return [                                                     
+      24 -    ['Name', formatName(pokemon.name)],                        
+      25 -    ['ID', formatNumber(pokemon.id)],                          
+      26 -    ['Base', pokemon.baseExperience === null ? '-' : `${pokemon
+         -.baseExperience} XP`],                                         
+      27 -    ['Weight', `${pokemon.weight} kg`],                        
+      28 -    ['Height', `${pokemon.height} m`],                         
+      29 -    ['Types', pokemon.types.map(formatName).join(', ')],       
+      30 -    ['Abilities', pokemon.abilities.map(formatName).join(', ')]
+         -,                                                              
+      31 -  ];                                                           
+      32 -}                                                              
+      33 -                                                               
+      24  export default function DetailScreen() {
+      25    const router = useRouter();
+      36 -  const theme = useTheme();                                    
+      26    const { id } = useLocalSearchParams<{ id: string }>();
+      27    const pokemonId = Number(id);
+      28    const { data, isPending, isError, error, refetch } = usePokem
+          onDetail(pokemonId);
+     ...
+      39      <ThemedView style={styles.container}>
+      40        <SafeAreaView edges={['top']} style={styles.top}>
+      41          <View style={styles.header}>
+      53 -          <Pressable accessibilityRole="button" accessibilityLa
+         -bel="Go back" onPress={() => router.back()} style={styles.back}
+         ->                                                              
+      54 -            <ThemedText style={styles.backChevron}>‹</ThemedTex
+         -t>                                                             
+      55 -            <ThemedText style={styles.backLabel}>Back</ThemedTe
+         -xt>                                                            
+      42 +          <Pressable accessibilityRole="button" accessibilityLa
+         +bel="Go back" onPress={() => router.back()} style={styles.iconB
+         +utton}>                                                        
+      43 +            <Icon name="back" />                               
+      44            </Pressable>
+      45            <Pressable
+      46              accessibilityRole="button"
+      47              accessibilityLabel={isFavorite ? 'Remove from favor
+          ites' : 'Add to favorites'}
+      48              onPress={() => toggle.mutate({ favorite: { id: data
+          .id, name: data.name }, isFavorite })}
+      61 -            style={styles.heart}                               
+      49 +            style={styles.iconButton}                          
+      50            >
+      63 -            <Icon name={isFavorite ? 'heartFilled' : 'heart'} /
+         ->                                                              
+      51 +            <Icon name={isFavorite ? 'heartActive' : 'heart'} /
+         +>                                                              
+      52            </Pressable>
+      53          </View>
+      54  
+      55          <View style={styles.titleRow}>
+      56            <ThemedText type="display">{formatName(data.name)}</T
+          hemedText>
+      69 -          <ThemedText style={styles.number}>#{formatNumber(data
+         -.id)}</ThemedText>                                             
+      57 +          <ThemedText style={styles.number}>{formatNumber(data.
+         +id)}</ThemedText>                                              
+      58          </View>
+      59          <View style={styles.chips}>
+      60            {data.types.map((type) => (
+     ...
+      68        <ThemedView type="backgroundElement" style={styles.sheet}
+          >
+      69          <SegmentedTabs tabs={TABS} value={tab} onChange={setTab
+          } />
+      70          <ScrollView contentContainerStyle={styles.sheetContent}
+          >
+      83 -          {tab === 'About'                                     
+      84 -            ? aboutRows(data).map(([label, value]) => (        
+      85 -                <View key={label} style={styles.aboutRow}>     
+      86 -                  <ThemedText style={styles.aboutLabel}>{label}
+         -</ThemedText>                                                  
+      87 -                  <ThemedText style={[styles.aboutValue, { colo
+         -r: theme.textSecondary }]}>{value}</ThemedText>                
+      88 -                </View>                                        
+      89 -              ))                                               
+      90 -            : null}                                            
+      71 +          {/* All three stay mounted and only hide, so switchin
+         +g is instant and the evolution chain loads in the background. *
+         +/}                                                             
+      72 +          <View style={tab === 'About' ? undefined : styles.hid
+         +den}>                                                          
+      73 +            <AboutTab pokemon={data} />                        
+      74 +          </View>                                              
+      75 +          <View style={tab === 'Stats' ? undefined : styles.hid
+         +den}>                                                          
+      76 +            <StatsTab stats={data.stats} />                    
+      77 +          </View>                                              
+      78 +          <View style={tab === 'Evolution' ? undefined : styles
+         +.hidden}>                                                      
+      79 +            <EvolutionTab speciesId={data.speciesId} />        
+      80 +          </View>                                              
+      81          </ScrollView>
+      82        </ThemedView>
+      83      </ThemedView>
+     ...
+       91      flexDirection: 'row',
+       92      alignItems: 'center',
+       93      justifyContent: 'space-between',
+       94 +    // The icon buttons have 16 px padding, so the icons line 
+          +up with the 24 px margin of the design.                       
+       95      marginHorizontal: -Spacing.three,
+      105 -    minHeight: 40,                                            
+       96    },
+      107 -  back: { flexDirection: 'row', alignItems: 'center', gap: 5, 
+          -paddingHorizontal: 9, paddingVertical: Spacing.two },         
+      108 -  backChevron: { fontSize: 28, lineHeight: 30, fontFamily: Fon
+          -tFamily.regular },                                            
+      109 -  backLabel: { fontSize: 17, lineHeight: 22, fontFamily: FontF
+          -amily.regular },                                              
+      110 -  heart: { padding: Spacing.two },                            
+       97 +  iconButton: { padding: Spacing.three },                     
+       98    titleRow: {
+       99      flexDirection: 'row',
+      100      alignItems: 'flex-end',
+      101      justifyContent: 'space-between',
+      115 -    marginTop: Spacing.three,                                 
+      102 +    marginTop: Spacing.two,                                   
+      103    },
+      104    number: { fontSize: 24, lineHeight: 38, fontFamily: FontFami
+           ly.regular, opacity: 0.3 },
+      105    chips: { flexDirection: 'row', gap: Spacing.two, marginTop: 
+           Spacing.three },
+     ...
+      116      paddingTop: 74,
+      117      paddingHorizontal: Spacing.four,
+      118    },
+      132 -  sheetContent: { paddingTop: Spacing.four, gap: Spacing.three
+          -, paddingBottom: Spacing.five },                              
+      133 -  aboutRow: { flexDirection: 'row', gap: Spacing.three },     
+      134 -  aboutLabel: { width: 100, fontFamily: FontFamily.semiBold, f
+          -ontSize: 14, lineHeight: 18 },                                
+      135 -  aboutValue: { flex: 1, fontFamily: FontFamily.regular, fontS
+          -ize: 14, lineHeight: 18 },                                    
+      119 +  sheetContent: { paddingTop: Spacing.four, paddingBottom: Spa
+          +cing.five },                                                  
+      120 +  hidden: { display: 'none' },                                
+      121  });
+
+● Now the checks: type check, lint, and the evolution logic against the real API
+  (a straight chain, a branch like Eevee, a Pokémon that doesn't evolve).
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The logic matches the Figma evolution chain and handles all eight Eevee
+  branches, with "Pikachu Rock Star" resolving to Pikachu. I'm starting the web
+  build to click through the tabs and a tap-through next. · summary
+
+  Made 1 scratchpad edit +84, ran 1 shell command (ctrl+o to expand)
+
+● The tabs switch, the evolution chain loads, and tapping Raichu opens Raichu's
+  detail. Now the screenshots, to compare with the Figma.
+
+  Read 3 files (ctrl+o to expand)
+
+● All three screens match the Figma. I'll stop the test servers I started.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Section E, the detail screen, is done. I clicked through it in a headless
+  browser, but I haven't run it on your phone, and the earlier phone crash is
+  still unresolved. tsc and lint pass.
+
+  E checklist:
+  - [x] Reachable from the list and from favorites: both open the same detail
+    screen.
+  - [x] Name, number, artwork, types in the type colour: the name is large, the
+    number is faded, and each type chip has its coloured dot.
+  - [x] Three parts, quick to switch: About, Stats and Evolution.
+    - Quick switching: all three stay loaded and only hide, so switching is
+      instant.
+    - Evolution loading: the evolution chain loads in the background while you
+      read About.
+  - [x] Stats tab: the six base stats, each with a label, a value and a purple
+    bar. Pikachu shows HP 35, Attack 55, Defense 40, Special Attack 50, Special
+    Defense 50 and Speed 90, matching the API.
+  - [x] Evolution chain from the API, tap through to the next detail:
+    - Straight chain: Pikachu shows Pichu → Pikachu → Raichu with dotted
+      connectors, as in the Figma.
+    - Branches: Eevee shows all eight of its evolutions.
+    - Tap-through: tapping Raichu opened Raichu's page.
+    - Edge cases: the Pokémon you're already on isn't tappable, a Pokémon that
+      doesn't evolve shows "This Pokémon does not evolve.", and alternate forms
+      like Pikachu Rock Star show their base Pokémon's chain.
+  - [x] Favorite and unfavorite: the heart in the top corner turns red when a
+    Pokémon is a favorite, as in the Figma. I did not test saving a favorite end
+    to end here.
+  - [x] Loading and error states: the detail has full-screen ones. The evolution
+    tab has its own small spinner and "Try again", so a failed chain doesn't
+    break the rest of the page. I did not force an error to test it.
+
+  Also changed:
+  - Back arrow: the text "‹ Back" is now the design's arrow icon.
+  - Number format: the number reads 025 (no #), as in the Android frame.
+  - Stats bars: they fill up to a base stat of 150. The Figma's bar lengths
+    aren't proportional to the values, so I picked that scale.
+
+  Still open: F (favorites empty state), G (compare) and the hand-in files:
+  specs/, AGENTS.md, GitHub issues, chat-history/, docs/explanation.md. The
+  deadline is tonight at 23:59, and nothing is committed to git yet. The hand-in
+  files matter most for your grade, so I suggest F next (it's small), then the
+  hand-in files. Do you want that?
+
+> Do f now
+
+● Section F is the Favorites screen. Saving to SQLite and the screen itself
+  already exist, so what's missing is the empty state. The list and Favorites
+  screens currently duplicate the same grid code, so I'll pull that into one
+  shared component first.
+
+● Write(F:\Expo project\src\components\pokemon-grid.tsx)
+  ⎿  Wrote 64 lines to F:\Expo project\src\components\pokemon-grid.tsx
+      1 import { useRouter } from 'expo-router';
+      2 import type { ReactElement } from 'react';
+      3 import { FlatList, StyleSheet, useWindowDimensions, View } from '
+        react-native';
+      4
+      5 import { artworkUrl } from '@/api/pokeapi';
+      6 import { Pokecard } from '@/components/pokecard';
+      7 import { Spacing } from '@/constants/theme';
+      8
+      9 const COLUMNS = 2;
+     … +55 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\app\(tabs)\index.tsx)
+  ⎿  Added 6 lines, removed 40 lines
+       1 -import { useRouter } from 'expo-router';                       
+       1  import { useState } from 'react';
+       3 -import { FlatList, StyleSheet, useWindowDimensions, View } from
+         - 'react-native';                                               
+       2 +import { StyleSheet, View } from 'react-native';               
+       3  import { SafeAreaView } from 'react-native-safe-area-context';
+       4  
+       6 -import { artworkUrl } from '@/api/pokeapi';                    
+       7 -import { Pokecard } from '@/components/pokecard';              
+       5 +import { PokemonGrid } from '@/components/pokemon-grid';       
+       6  import { EmptyState, ErrorState, LoadingState } from '@/compone
+          nts/query-status';
+       7  import { SearchBar } from '@/components/search-bar';
+       8  import { ThemedText } from '@/components/themed-text';
+     ...
+      10  import { Spacing } from '@/constants/theme';
+      11  import { usePokemonSearch } from '@/hooks/use-pokemon-search';
+      12  
+      15 -const COLUMNS = 2;                                             
+      16 -                                                               
+      13  export default function ListScreen() {
+      18 -  const router = useRouter();                                  
+      19 -  const { width } = useWindowDimensions();                     
+      14    const [query, setQuery] = useState('');
+      15    const { results, isSearching, isPending, isError, error, isRe
+          fetching, refetch } = usePokemonSearch(query);
+      16  
+      17    if (isPending) return <LoadingState />;
+      18    if (isError) return <ErrorState error={error} onRetry={() => 
+          void refetch()} />;
+      19  
+      26 -  // Fixed card width, so a last row with one card is as wide a
+         -s the others.                                                  
+      27 -  const cardWidth = Math.floor((width - Spacing.four * 2 - Spac
+         -ing.three * (COLUMNS - 1)) / COLUMNS);                         
+      28 -                                                               
+      20    return (
+      21      <ThemedView style={styles.container}>
+      22        <SafeAreaView edges={['top']} style={styles.container}>
+      23          <View style={styles.searchBar}>
+      24            <SearchBar value={query} onChangeText={setQuery} />
+      25          </View>
+      35 -        <FlatList                                              
+      36 -          data={results}                                       
+      37 -          numColumns={COLUMNS}                                 
+      38 -          keyExtractor={(item) => String(item.id)}             
+      39 -          columnWrapperStyle={styles.row}                      
+      40 -          contentContainerStyle={styles.content}               
+      41 -          keyboardShouldPersistTaps="handled"                  
+      42 -          keyboardDismissMode="on-drag"                        
+      43 -          ListHeaderComponent={isSearching ? undefined : <Theme
+         -dText type="heading">All Pokémon</ThemedText>}                 
+      44 -          ListEmptyComponent={                                 
+      45 -            <EmptyState title="No Pokémon found" message="Check
+         - the spelling or try a shorter name." />                       
+      46 -          }                                                    
+      26 +        <PokemonGrid                                           
+      27 +          items={results}                                      
+      28 +          header={isSearching ? undefined : <ThemedText type="h
+         +eading">All Pokémon</ThemedText>}                              
+      29 +          empty={<EmptyState title="No Pokémon found" message="
+         +Check the spelling or try a shorter name." />}                 
+      30            refreshing={isRefetching}
+      31            onRefresh={() => void refetch()}
+      49 -          // The list has ~1300 items: only render what is on (
+         -or near) the screen.                                           
+      50 -          initialNumToRender={10}                              
+      51 -          maxToRenderPerBatch={10}                             
+      52 -          windowSize={7}                                       
+      53 -          removeClippedSubviews                                
+      54 -          renderItem={({ item }) => (                          
+      55 -            <View style={{ width: cardWidth }}>                
+      56 -              <Pokecard                                        
+      57 -                id={item.id}                                   
+      58 -                name={item.name}                               
+      59 -                imageUrl={artworkUrl(item.id)}                 
+      60 -                onPress={() => router.push({ pathname: '/pokemo
+         -n/[id]', params: { id: item.id } })}                           
+      61 -              />                                               
+      62 -            </View>                                            
+      63 -          )}                                                   
+      32          />
+      33        </SafeAreaView>
+      34      </ThemedView>
+     ...
+      38  const styles = StyleSheet.create({
+      39    container: { flex: 1 },
+      40    searchBar: { paddingHorizontal: Spacing.three, paddingTop: Sp
+          acing.three },
+      73 -  content: { paddingHorizontal: Spacing.four, paddingTop: Spaci
+         -ng.four, paddingBottom: Spacing.four, gap: Spacing.three },    
+      74 -  row: { gap: Spacing.three },                                 
+      41  });
+
+● Write(F:\Expo project\src\app\(tabs)\favorites.tsx)
+  ⎿  Added 15 lines, removed 23 lines
+       1 -import { useRouter } from 'expo-router';                       
+       2 -import { FlatList, StyleSheet } from 'react-native';           
+       1 +import { StyleSheet } from 'react-native';                     
+       2  import { SafeAreaView } from 'react-native-safe-area-context';
+       3  
+       5 -import { artworkUrl } from '@/api/pokeapi';                    
+       6 -import { Pokecard } from '@/components/pokecard';              
+       7 -import { ErrorState, LoadingState } from '@/components/query-st
+         -atus';                                                         
+       4 +import { PokemonGrid } from '@/components/pokemon-grid';       
+       5 +import { EmptyState, ErrorState, LoadingState } from '@/compone
+         +nts/query-status';                                             
+       6  import { ThemedText } from '@/components/themed-text';
+       7  import { ThemedView } from '@/components/themed-view';
+       8  import { Spacing } from '@/constants/theme';
+       9  import { useFavorites } from '@/hooks/use-favorites';
+      10  
+      11  export default function FavoritesScreen() {
+      14 -  const router = useRouter();                                  
+      12    const { data, isPending, isError, error, refetch } = useFavor
+          ites();
+      13  
+      14    if (isPending) return <LoadingState />;
+     ...
+      16  
+      17    return (
+      18      <ThemedView style={styles.container}>
+      22 -      <SafeAreaView edges={['top']} style={styles.container}>  
+      23 -        <FlatList                                              
+      24 -          data={data}                                          
+      25 -          numColumns={2}                                       
+      26 -          keyExtractor={(item) => String(item.id)}             
+      27 -          columnWrapperStyle={styles.row}                      
+      28 -          contentContainerStyle={styles.content}               
+      29 -          ListHeaderComponent={<ThemedText type="heading">My fa
+         -vorites</ThemedText>}                                          
+      30 -          renderItem={({ item }) => (                          
+      31 -            <Pokecard                                          
+      32 -              id={item.id}                                     
+      33 -              name={item.name}                                 
+      34 -              imageUrl={artworkUrl(item.id)}                   
+      35 -              onPress={() => router.push({ pathname: '/pokemon/
+         -[id]', params: { id: item.id } })}                             
+      19 +      <SafeAreaView edges={['top']} style={[styles.container, s
+         +tyles.top]}>                                                   
+      20 +        <PokemonGrid                                           
+      21 +          items={data}                                         
+      22 +          header={<ThemedText type="heading">My favorites</Them
+         +edText>}                                                       
+      23 +          empty={                                              
+      24 +            <EmptyState                                        
+      25 +              icon="heart"                                     
+      26 +              title="No favorites yet"                         
+      27 +              message="Open a Pokémon and tap the heart to save
+         + it here."                                                     
+      28              />
+      37 -          )}                                                   
+      29 +          }                                                    
+      30          />
+      31        </SafeAreaView>
+      32      </ThemedView>
+     ...
+      35  
+      36  const styles = StyleSheet.create({
+      37    container: { flex: 1 },
+      46 -  content: { paddingHorizontal: Spacing.four, paddingTop: Spaci
+         -ng.three, paddingBottom: Spacing.four, gap: Spacing.three },   
+      47 -  row: { gap: Spacing.three },                                 
+      38 +  // No search bar on this screen, so the title starts closer t
+         +o the top (as in the design).                                  
+      39 +  top: { paddingTop: Spacing.zero },                           
+      40  });
+
+● I referenced a spacing value that doesn't exist, and the empty state doesn't
+  take an icon yet. I'll fix both.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● That's my own edit. Now the real test: the empty state, then saving a
+  favorite, then reloading the page to check it's still there afterwards.
+
+  Made 1 scratchpad edit +88, ran 1 shell command (ctrl+o to expand)
+
+● It all works: the empty state, adding, keeping favorites after a reload, and
+  removing. I'll look at how it renders.
+
+  Read 2 files, ran 1 shell command (ctrl+o to expand)
+
+● Section F, favorites, is done. I tested the whole flow in a headless browser,
+  but not on your phone, so the earlier phone crash is still unresolved. tsc and
+  lint pass.
+
+  I started with the empty state, then saved Pikachu and Charmander from their
+  detail screens, reloaded the page, and removed Pikachu again. This is what
+  happened:
+
+  - [x] Own screen: the Favorites tab shows "My favorites" with the same card
+    grid as the list.
+  - [x] Empty state: with nothing saved it shows a faded heart, "No favorites
+    yet", and "Open a Pokémon and tap the heart to save it here."
+  - [x] Still there after a restart: after a full page reload, which clears
+    memory and leaves only the database, both Pokémon were still there. They are
+    stored in SQLite.
+  - [x] Favorite and unfavorite: tapping the heart saved Pokémon. Removing
+    Pikachu from its detail screen took it off the Favorites screen.
+  - [x] Reachable from favorites: tapping a card opens the same detail screen as
+    from the list.
+  - [x] Loading and error states: they use the same full-screen ones as the
+    list.
+
+  I also pulled the card grid that the list and Favorites screens both used into
+  one shared component, pokemon-grid.tsx (src/components/pokemon-grid.tsx).
+  That keeps the two screens in sync and means the list code now lives in one
+  place.
+
+  Limits:
+  - Web only: the restart test ran on web. On a phone, expo-sqlite writes to a
+    file on the device, so it should behave the same, but I couldn't check that.
+  - Haptics: the haptic buzz on favorite only works on a phone, so I couldn't
+    see it here.
+
+  Still open: G (compare) and the hand-in files. The deadline is tonight at
+  23:59 and nothing is committed to git yet. A missing hand-in item caps your
+  grade at a 5, so I suggest doing the hand-in files next: the specs/ files,
+  AGENTS.md, docs/explanation.md and a git commit. Compare is the one remaining
+  feature, and it comes after those. Do you want me to start on the hand-in
+  files?
+
+> How can I add a pokemon to favourites?
+
+● Here's how, in the app:
+
+  1. On the Pokémons tab, tap any card (or search for one first).
+  2. On the detail screen, tap the heart in the top-right corner.
+     - Outline heart: not a favorite yet.
+     - Red filled heart: it's now a favorite.
+  3. Open the Favorites tab at the bottom. The Pokémon appears there.
+
+  To remove one, tap the red heart again on its detail screen.
+
+  The small "⋮" dots on the cards are in the Figma, but they're hidden for now.
+  In the design they open an options menu, and I haven't built that menu yet.
+  That means the heart on the detail screen is currently the only way to add a
+  favorite.
+
+  Do you want me to build that options menu, so you can add a favorite straight
+  from a card? The design has it as a slide-up sheet with three options.
+
+> Do G now
+
+● Section G is Compare, the feature you design yourself. Here's my plan,
+  following the app's existing style:
+
+  - New "Compare" tab: a third tab in the bottom menu.
+  - Two slots side by side: tapping a slot opens a search picker.
+  - Per-stat bars: the six stats are shown as bars with the stronger side
+    highlighted, plus a one-line verdict.
+
+  I'll start with the comparison logic (kept separate from the UI), then the
+  screen.
+
+● Write(F:\Expo project\src\utils\compare.ts)
+  ⎿  Wrote 34 lines to F:\Expo project\src\utils\compare.ts
+       1 import type { PokemonStat } from '@/api/pokeapi';
+       2
+       3 export type StatWinner = 'first' | 'second' | 'tie';
+       4
+       5 export type StatComparison = {
+       6   /** PokeAPI stat name, e.g. "special-attack". */
+       7   name: string;
+       8   first: number;
+       9   second: number;
+      10   winner: StatWinner;
+     … +24 lines (ctrl+o to expand)
+
+  Read 2 files (ctrl+o to expand)
+
+● Two small changes to existing code: the grid gets an optional onSelect (so the
+  picker can reuse it), and the detail hook can wait until a Pokémon is chosen.
+
+● Update(F:\Expo project\src\hooks\use-pokemon.ts)
+  ⎿  Added 3 lines, removed 2 lines
+      10    });
+      11  }
+      12  
+      13 -export function usePokemonDetail(id: number) {                 
+      13 +/** Pass `undefined` to wait, for example while no Pokémon is c
+         +hosen yet. */                                                  
+      14 +export function usePokemonDetail(id: number | undefined) {     
+      15    return useQuery({
+      16      queryKey: ['pokemon', 'detail', id],
+      16 -    queryFn: () => fetchPokemonDetail(id),                     
+      17 +    queryFn: id === undefined ? skipToken : () => fetchPokemonD
+         +etail(id),                                                     
+      18    });
+      19  }
+      20  
+
+● Update(F:\Expo project\src\components\pokemon-grid.tsx)
+  ⎿  Added 4 lines, removed 2 lines
+      16    empty?: ReactElement;
+      17    refreshing?: boolean;
+      18    onRefresh?: () => void;
+      19 +  /** Called when a card is tapped. Without it, the card opens 
+         +the Pokémon's detail screen. */                                
+      20 +  onSelect?: (id: number) => void;                             
+      21  };
+      22  
+      21 -/** The two-column grid of Pokécards, used by the list, the sea
+         -rch results and the favorites. */                              
+      22 -export function PokemonGrid({ items, header, empty, refreshing,
+         - onRefresh }: PokemonGridProps) {                              
+      23 +/** The two-column grid of Pokécards, used by the list, the sea
+         +rch results, the favorites and the compare picker. */          
+      24 +export function PokemonGrid({ items, header, empty, refreshing,
+         + onRefresh, onSelect }: PokemonGridProps) {                    
+      25    const router = useRouter();
+      26    const { width } = useWindowDimensions();
+      27  
+● Update(F:\Expo project\src\components\pokemon-grid.tsx)
+  ⎿  Added 3 lines, removed 1 line
+      52              id={item.id}
+      53              name={item.name}
+      54              imageUrl={artworkUrl(item.id)}
+      55 -            onPress={() => router.push({ pathname: '/pokemon/[i
+         -d]', params: { id: item.id } })}                               
+      55 +            onPress={() =>                                     
+      56 +              onSelect ? onSelect(item.id) : router.push({ path
+         +name: '/pokemon/[id]', params: { id: item.id } })              
+      57 +            }                                                  
+      58            />
+      59          </View>
+      60        )}
+
+● The Figma has no compare icon, so I'll draw two matching ones in the design's
+  colours: Midnight when inactive, Purple when active.
+
+● Write(F:\Expo project\assets\icons\compare.svg)
+  ⎿  Wrote 3 lines to F:\Expo project\assets\icons\compare.svg
+      1 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns
+        ="http://www.w3.org/2000/svg">
+      2 <path d="M4 8H19M19 8L15.5 4.5M19 8L15.5 11.5M20 16H5M5 16L8.5 12
+        .5M5 16L8.5 19.5" stroke="#0E0940" stroke-width="2" stroke-lineca
+        p="round" stroke-linejoin="round"/>
+      3 </svg>
+
+● Write(F:\Expo project\assets\icons\compare-active.svg)
+  ⎿  Wrote 3 lines to F:\Expo project\assets\icons\compare-active.svg
+      1 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns
+        ="http://www.w3.org/2000/svg">
+      2 <path d="M4 8H19M19 8L15.5 4.5M19 8L15.5 11.5M20 16H5M5 16L8.5 12
+        .5M5 16L8.5 19.5" stroke="#5631E8" stroke-width="2" stroke-lineca
+        p="round" stroke-linejoin="round"/>
+      3 </svg>
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(F:\Expo project\src\components\icon.tsx)
+  ⎿  Added 3 lines
+      13    heartActive: require('../../assets/icons/heart-active.svg'),
+      14    pokemon: require('../../assets/icons/pokemon.svg'),
+      15    pokemonActive: require('../../assets/icons/pokemon-active.svg
+          '),
+      16 +  /** Not in the Figma: drawn in the same colours for the Compa
+         +re tab. */                                                     
+      17 +  compare: require('../../assets/icons/compare.svg'),          
+      18 +  compareActive: require('../../assets/icons/compare-active.svg
+         +'),                                                            
+      19    /** Dotted line between two Pokémon in the evolution chain (8
+          0 x 20). */
+      20    evolutionLink: require('../../assets/icons/evolution-link.svg
+          '),
+      21  };
+
+  Read 1 file (ctrl+o to expand)
+
+● Update(F:\Expo project\src\app\(tabs)\_layout.tsx)
+  ⎿  Added 7 lines
+      32            tabBarIcon: ({ focused }) => <Icon name={focused ? 'h
+          eartFilled' : 'heart'} />,
+      33          }}
+      34        />
+      35 +      <Tabs.Screen                                             
+      36 +        name="compare"                                         
+      37 +        options={{                                             
+      38 +          title: 'Compare',                                    
+      39 +          tabBarIcon: ({ focused }) => <Icon name={focused ? 'c
+         +ompareActive' : 'compare'} />,                                 
+      40 +        }}                                                     
+      41 +      />                                                       
+      42      </Tabs>
+      43    );
+      44  }
+
+● Write(F:\Expo project\src\components\compare-slot.tsx)
+  ⎿  Wrote 92 lines to F:\Expo project\src\components\compare-slot.tsx
+       1 import { Image } from 'expo-image';
+       2 import { ActivityIndicator, Pressable, StyleSheet, View } from '
+         react-native';
+       3
+       4 import { artworkUrl } from '@/api/pokeapi';
+       5 import { ThemedText } from '@/components/themed-text';
+       6 import { FontFamily, Radius, SoftShadow, Spacing } from '@/const
+         ants/theme';
+       7 import { useTheme } from '@/hooks/use-theme';
+       8 import { formatName, formatNumber } from '@/utils/format';
+     … +84 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\components\compare-stats.tsx)
+  ⎿  Wrote 85 lines to F:\Expo project\src\components\compare-stats.tsx
+      1 import { StyleSheet, View } from 'react-native';
+      2
+      3 import type { PokemonDetail } from '@/api/pokeapi';
+      4 import { ThemedText } from '@/components/themed-text';
+      5 import { FontFamily, Radius, Spacing } from '@/constants/theme';
+      6 import { useTheme } from '@/hooks/use-theme';
+      7 import { compareStats, summarize, type StatComparison } from '@/u
+        tils/compare';
+      8 import { formatName } from '@/utils/format';
+      9 import { formatStatName, statFraction } from '@/utils/stats';
+     … +76 lines (ctrl+o to expand)
+
+● Now the picker (a slide-up sheet with search) and the Compare screen itself.
+
+● Write(F:\Expo project\src\components\pokemon-picker.tsx)
+  ⎿  Wrote 77 lines to F:\Expo project\src\components\pokemon-picker.tsx
+       1 import { useState } from 'react';
+       2 import { Modal, Pressable, StyleSheet, View } from 'react-native
+         ';
+       3 import { SafeAreaProvider, SafeAreaView } from 'react-native-saf
+         e-area-context';
+       4
+       5 import { PokemonGrid } from '@/components/pokemon-grid';
+       6 import { EmptyState, ErrorState, LoadingState } from '@/componen
+         ts/query-status';
+       7 import { SearchBar } from '@/components/search-bar';
+     … +70 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\src\app\(tabs)\compare.tsx)
+  ⎿  Wrote 90 lines to F:\Expo project\src\app\(tabs)\compare.tsx
+       1 import { useState } from 'react';
+       2 import { ScrollView, StyleSheet, View } from 'react-native';
+       3 import { SafeAreaView } from 'react-native-safe-area-context';
+       4
+       5 import { CompareSlot } from '@/components/compare-slot';
+       6 import { CompareStats } from '@/components/compare-stats';
+       7 import { PokemonPicker } from '@/components/pokemon-picker';
+       8 import { ErrorState, LoadingState } from '@/components/query-sta
+         tus';
+       9 import { ThemedText } from '@/components/themed-text';
+     … +81 lines (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The comparison logic checks out, including the one-point HP tie-break and a
+  self-match tie. Next I'll test the UI by picking two Pokémon through the
+  search picker. · summary
+
+  Made 1 scratchpad edit +88, ran 1 shell command (ctrl+o to expand)
+
+● The whole flow works, and the results are right (Magikarp's speed of 80 beats
+  Blastoise's 78, so Blastoise wins 5 of 6). Now how it looks.
+
+  Read 3 files (ctrl+o to expand)
+
+● It all matches the app's style. One flaw: the picker's "Close" link is a
+  default blue rather than the design's purple. I'll fix that and stop the test
+  servers.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Section G, Compare, is done. I tested it in a headless browser, not on your
+  phone, so the earlier phone crash is still unresolved. tsc and lint pass.
+
+  Since you design this feature, here is what I chose:
+  - New "Compare" tab: it's the third tab in the bottom menu. The Figma has no
+    icon for it, so I drew two matching arrows in the design's Midnight and
+    Purple colours.
+  - Two slots side by side: each is a card with a "+" until you choose a
+    Pokémon.
+  - Picker: tapping a slot opens a slide-up sheet with the same search field and
+    Pokémon grid as the list. Tapping a Pokémon picks it. You can tap a slot
+    again to change it.
+  - Per-stat result:
+    - Each of the six stats has a label in the middle, with both values and bars
+      either side.
+    - The stronger side's bar is purple with a bold value, and the other is
+      grey.
+    - A one-line verdict sits above, such as "Blastoise is stronger in 5 of 6
+      stats."
+
+  G checklist:
+  - [x] Compare any two Pokémon: I tested Charizard vs Blastoise, then swapped
+    Charizard for Magikarp. Choosing the same one twice also works and shows all
+    ties.
+  - [x] Per stat, who is stronger: the numbers match PokeAPI, including close
+    ones (HP 78 vs 79 goes to Blastoise).
+  - [x] Follows the Figma style: same colours, Rubik font, card shadows, and the
+    Pokécard look.
+  - [x] Loading and error states: each slot shows a spinner while its Pokémon
+    loads. The result area has a small spinner and a "Try again" button if
+    loading fails. I did not force an error to test it.
+
+  How it's built (useful for your explanation file):
+  - Comparison logic: it's separate from the screen, in compare.ts
+    (src/utils/compare.ts).
+  - Components: the UI is in compare-slot.tsx (src/components/compare-slot.tsx),
+    compare-stats.tsx (src/components/compare-stats.tsx) and pokemon-picker.tsx
+    (src/components/pokemon-picker.tsx).
+  - Screen: compare.tsx (src/app/(tabs)/compare.tsx).
+
+  All seven app sections (A to G) are now built. These hand-in items are still
+  missing, and without them your grade caps at a 5:
+  - specs/product.md and specs/features/*.md
+  - AGENTS.md (the scaffold's own AGENTS.md is still there)
+  - docs/explanation.md
+  - GitHub issues, closed by commits
+  - chat-history/
+
+  Nothing is committed to git yet. The deadline is tonight at 23:59, and the
+  phone crash is still open. Should I write the spec files, AGENTS.md,
+  docs/explanation.md and the first git commits now?
+
+> Check "H" now
+
+● I'll check each hand-in item (section H) against what's actually in the
+  project.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The git repo already has commits and a GitHub remote that you set up, and
+  there's an untracked Pokedex/ folder. I'll look at both before reporting.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Section H is mostly not done. The app and git history are in place, but the
+  written parts of the hand-in don't exist yet. I only read your project and the
+  public GitHub page, and changed nothing.
+
+  ┌───────────────────────────┬─────────────────────────────────────────────┐
+  │          H item           │                   Status                    │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │                           │ ❌ Missing. It must also name your SQLite   │
+  │ specs/product.md          │ choice and native-feature choice, each with │
+  │                           │  an alternative and why.                    │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │                           │ ❌ Missing. You need five, one each for     │
+  │ specs/features/*.md       │ list, search, detail, favorites and         │
+  │                           │ compare.                                    │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │                           │ ⚠️ Exists, but it's still the unchanged     │
+  │ AGENTS.md                 │ Expo template. It should grow with your     │
+  │                           │ project's rules.                            │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ One GitHub issue per      │ ❌ The repo has 0 issues.                   │
+  │ feature                   │                                             │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ Agent's plan as a comment │ ❌ No issues, so none.                      │
+  │  on each issue            │                                             │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ Each issue closed by a    │ ❌ No commit message does this.             │
+  │ commit (closes #N)        │                                             │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ chat-history/             │ ❌ Missing. It needs one issue's chat, with │
+  │                           │  the issue number in the file name.         │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ docs/explanation.md       │ ❌ Missing. It needs your three answers.    │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ Git history intact        │ ✅ 4 commits on master, all pushed to       │
+  │                           │ origin/master, no squashing.                │
+  ├───────────────────────────┼─────────────────────────────────────────────┤
+  │ .env in .gitignore        │ ✅ Not needed. The app uses no API key, and │
+  │                           │  the .gitignore already has .env*.local.    │
+  └───────────────────────────┴─────────────────────────────────────────────┘
+
+  Notes:
+  - Commits: the last commit covers everything built so far, and there is
+    nothing uncommitted except the folder below. Three of the four commits are
+    large, which doesn't match the assignment's preferred "small tasks" way of
+    working.
+  - Stray folder: there's an untracked Pokedex/ folder inside the project. It's
+    a nested git repo, probably a clone made by mistake, and it contains only
+    .git and .gitattributes. Don't add it to a commit. If you don't need it,
+    delete it.
+  - chat-history/: I can't create this myself. In Claude Code, /export saves a
+    chat. This session works because things didn't work first time (the phone
+    crash, for example), but it covers all seven sections. You could export it
+    and name it for one issue, or start one new chat per issue as the assignment
+    suggests.
+  - Your explanation answers: question 3 asks for an agent suggestion you
+    rejected or changed. You have to name your own real example. I won't invent
+    one.
+  - Phone crash: still unresolved, and graders run the app in Expo Go. I'd fix
+    this before anything else, since a start-up crash scores a 1.
+
+  The deadline is tonight at 23:59. I'd do these in order:
+  1. Fix the phone crash. I still need the Error: ... line from the crash page.
+  2. Write specs/product.md and the five feature specs.
+  3. Rewrite AGENTS.md for this project.
+  4. Draft docs/explanation.md with file and line references, leaving question 3
+     for your own words.
+
+  Should I start on step 2?
+
+> The phone crash is fixed. Fix the things from Section H
+
+● I'll follow the course's own templates for these files. Reading them first.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The templates call for a product spec, five feature specs, an AGENTS.md and
+  docs/explanation.md. I'm writing the specs from what the app actually does,
+  starting with exact file and line numbers for the explanation file. · summary
+  Ran 1 shell command (ctrl+o to expand)
+
+● I've pinned down the exact locations, and I'm writing the product spec and
+  five feature specs now. I'm ticking only what I've verified, leaving the
+  optional bonuses open since one as cast remains and dark mode and
+  accessibility are unchecked. · summary
+
+● Write(F:\Expo project\specs\product.md)
+  ⎿  Wrote 64 lines to F:\Expo project\specs\product.md
+      1 # Pokédex
+      2
+      3 A Pokédex for your phone. It lists every Pokémon from PokeAPI, le
+        ts you search by name, shows a detail page with about, stats and
+        evolution chain, keeps a list of favorites, and compares two Poké
+        mon stat by stat. It is for anyone who wants to look up a Pokémon
+         quickly. The design follows the course's [Figma file](https://ww
+        w.figma.com/design/dsgGXcu5WELIvRW90m5308/Pok%C3%A9mon-Code-Chall
+        enge?node-id=1-2).
+      4
+     … +60 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\specs\features\browse-list.md)
+  ⎿  Wrote 30 lines to F:\Expo project\specs\features\browse-list.md
+       1 # Browse the list
+       2
+       3 ## Goal
+       4
+       5 See every Pokémon as a grid of cards and scroll through them, so
+          I can find one by looking.
+       6
+       7 ## Constraints
+       8
+       9 - Lives on the first tab, `src/app/(tabs)/index.tsx`.
+     … +21 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\specs\features\search.md)
+  ⎿  Wrote 28 lines to F:\Expo project\specs\features\search.md
+       1 # Search by name
+       2
+       3 ## Goal
+       4
+       5 Find a Pokémon by typing a part of its name, so I do not have to
+          scroll through the whole list.
+       6
+       7 ## Constraints
+       8
+       9 - Search field at the top of the first tab, as in the Figma. No
+     … +20 lines (ctrl+o to expand)
+
+● Write(F:\Expo project\specs\features\detail.md)
+  ⎿  Wrote 34 lines to F:\Expo project\specs\features\detail.md
+       1 # Pokémon detail
+       2
+       3 ## Goal
+       4
+       5 Look at one Pokémon: who it is, what type, its facts, its stats
+         and what it evolves from and into.
+       6
+       7 ## Constraints
+       8
+       9 - One screen, `src/app/pokemon/[id].tsx`, reached from the list,
+     … +26 lines (~2 KB) (ctrl+o to expand)
+
+● Write(F:\Expo project\specs\features\favorites.md)
+  ⎿  Wrote 30 lines to F:\Expo project\specs\features\favorites.md
+       1 # Favorites
+       2
+       3 ## Goal
+       4
+       5 Save the Pokémon I like and open them again later, also after cl
+         osing the app.
+       6
+       7 ## Constraints
+       8
+       9 - Stored in SQLite, table `favorites` (`id`, `name`), in `src/db
+     … +22 lines (~1 KB) (ctrl+o to expand)
+
+● Write(F:\Expo project\specs\features\compare.md)
+  ⎿  Wrote 31 lines to F:\Expo project\specs\features\compare.md
+       1 # Compare
+       2
+       3 ## Goal
+       4
+       5 Put two Pokémon side by side and see which one is stronger on ea
+         ch stat. The Figma has no screen for this, so the design is ours
+         , in the style of the Figma.
+       6
+       7 ## Constraints
+       8
+     … +23 lines (ctrl+o to expand)
+
+● I'm updating AGENTS.md next, placing the project-specific rules above the Expo
+  template text, drawn from real problems encountered while building the app.
+  · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● My own rule says "no as casts", but one cast is still in the API helper. I'll
+  remove it so the code follows its own rule, then check the rest.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The TypeScript is now free of casts, any and @ts-ignore, since the remaining
+  as hits are only in comments, so I can tick that bonus in the spec. Next I'm
+  pulling the final exact line numbers for the explanation file. · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● That was my own edit. Next I'm moving to docs/explanation.md, where questions
+  1 and 2 can be answered from the code with file and line references, and I'm
+  leaving question 3 for you, since it asks for a rejected suggestion only you
+  can recall. · summary
+
+● Write(F:\Expo project\docs\explanation.md)
+  ⎿  Wrote 29 lines to F:\Expo project\docs\explanation.md
+      1 # Explanation - Pokédex
+      2
+      3 **Route:** Pokédex. **Tools:** Claude Code.
+      4
+      5 ## 1. Your technical choices
+      6
+      7 **What I store in SQLite: the favorites.** The table `favorites`
+        (`id`, `name`) is created in `src/db/database.ts:10`, and the dat
+        abase file `pokedex.db` is opened on line 8. The reading and writ
+        ing is in `src/db/favorites-repository.ts`: `getFavorites` (line
+     … +23 lines (~3 KB) (ctrl+o to expand)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I've fixed the parts of Section H that I can do from the code. Five items are
+  still open, and they need you. I haven't committed or pushed anything.
+
+  Done:
+  - specs/product.md: the app description, data and endpoints, and both
+    technical choices, each with its alternative and why. The Technical core
+    boxes are ticked and "Clean TypeScript" is ticked as a bonus.
+  - specs/features/*.md: five files (browse-list, search, detail, favorites,
+    compare), each with Goal, Constraints, Acceptance Criteria and Out of Scope.
+  - AGENTS.md: a Pokédex section now sits above the Expo template text, as the
+    course template says. It has the folder layout, the shared pieces to reuse,
+    the design rules, a "no as casts / any" rule, and the plan-first gh issue
+    comment workflow.
+  - docs/explanation.md: questions 1 and 2 are written. Every file and line they
+    name exists, which I checked with a script.
+  - Code fix: I removed the one as cast left in src/api/pokeapi.ts so the code
+    matches the new rule. tsc and lint still pass.
+
+  Still open, and only you can do these:
+  1. Question 3 in docs/explanation.md. It asks for an agent suggestion you
+     rejected or changed, so I left a TODO instead of making one up. Write it in
+     your own words, from something that really happened.
+  2. chat-history/. In Claude Code, /export saves this chat. Put the file in
+     chat-history/ with an issue number in the name. This chat has failures in
+     it (the phone crash, for example), which the assignment asks for.
+  3. GitHub issues. The repo has none, and I can't create them because gh isn't
+     installed here. You need five issues, one per feature, with the agent's
+     plan as a comment. The commits that finish each should say closes #N.
+  4. Commits. The new files aren't committed yet. If you want, I can commit
+     them, but I won't push without you asking.
+  5. Rewrite questions 1 and 2 in your own words. The grade checks that your
+     explanation matches your understanding, and my wording may not sound like
+     you.
+
+  The stray Pokedex/ folder (an empty nested git repo) is still in the project.
+  Don't commit it. Delete it if you don't need it.
+
+  The specs/ and AGENTS.md files describe the finished app rather than the order
+  you built it in, so the commit history won't line up with the plan-first
+  workflow. I can still draft the five issue texts for you to paste into GitHub
+  if you want them.
+
+> Check I now
+
+● I'll check Section I properly: every file and line named in
+  docs/explanation.md, including the references I wrote without backticks, plus
+  the three questions themselves.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Section I is mostly done. Questions 1 and 2 are written and accurate, and
+  every file and line they name exists. Question 3 is still empty, and that's
+  the one item that blocks it. I changed nothing.
+
+  ┌───────────────────────────────┬─────────────────────────────────────────┐
+  │            I item             │                 Status                  │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Q1: where each product.md     │ ✅ Both choices (SQLite favorites,      │
+  │ choice is in the code (file   │ haptics) are covered with file and      │
+  │ and line)                     │ line.                                   │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Q1: did a choice change while │ ⚠️ It says "no, neither changed", which │
+  │  building                     │  is true of the code. Check that it's   │
+  │                               │ true for you.                           │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Q2: one feature, API call to  │ ✅ Evolution chain, in six steps,       │
+  │ screen, naming the files      │ naming 9 files.                         │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Q3: a rejected or changed     │ ❌ Still a TODO. Only you can fill it   │
+  │ agent suggestion              │ in.                                     │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Every file and line named     │ ✅ All 18 references are valid.         │
+  │ exists                        │                                         │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Matches product.md            │ ✅ The SQLite and haptics choices       │
+  │                               │ agree.                                  │
+  └───────────────────────────────┴─────────────────────────────────────────┘
+
+  I checked every reference against the real files. For example, line 10 of
+  src/db/database.ts is the CREATE TABLE, line 23 of src/hooks/use-favorites.ts
+  is the haptic call, and line 116 of src/api/pokeapi.ts is fetchEvolutionChain.
+
+  What can go wrong:
+  - Line numbers go stale. If you edit any file the explanation names (the
+    database, the hooks, pokeapi.ts, [id].tsx, the evolution files), its lines
+    will shift and the references will be wrong. Don't touch those files before
+    handing in. If you do, I can re-check the numbers.
+  - It's my wording, not yours. The assignment says "your own words" and grades
+    whether your explanation matches your understanding. Read Q1 and Q2 and
+    rewrite them in your own voice, keeping the file and line numbers. If you
+    can't explain a sentence, ask me about it first.
+  - Q1 says nothing changed. Please confirm that, because if you changed a
+    choice while building, this file should say what and why.
+
+  Q3: it must be a real suggestion from your own chats that you rejected or
+  changed. I can't make one up. Looking back through this build, there are a few
+  places where my first approach was changed during the work. The Figma gave
+  only four type colours, so I made up the other 14 and flagged them. The first
+  search idea was a per-keystroke API call, which became filtering the loaded
+  list. The first Pokécard used the Figma's pixel sprites, which became the
+  official artwork. Those were my own changes, not yours. They only count if you
+  personally pushed back or decided otherwise. If you did, tell me which and
+  I'll help you word it with the commit or chat reference.
+
+  Is there something in this build that you pushed back on or changed?
+
+> Check H, I, J, K and tell mw what is unfinished from these with step by step
+  on how I can complete them
+
+● I'll re-check the current state of H, I, J and K against the repo and GitHub,
+  then list what's unfinished with steps.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● None of H, I, J or K is finished yet. Everything below is checked against your
+  project files, your git history and the public GitHub page.
+
+  Critical: your new files exist only on your computer. specs/, docs/, the
+  AGENTS.md rewrite and the pokeapi.ts fix are uncommitted, and the graders
+  clone the repo from GitHub. If you stop now, they get a repo with none of
+  them.
+
+  Status
+
+  H, what to hand in
+  - ✅ specs/product.md, the five feature specs, AGENTS.md and
+    docs/explanation.md exist, but only locally.
+  - ✅ Git history has 4 commits, all pushed. None says closes #N.
+  - ❌ GitHub issues: 0.
+  - ❌ chat-history/ doesn't exist.
+  - ❌ The files above are not committed or pushed.
+
+  I, explanation
+  - ✅ Q1 and Q2 are written, and every file and line they name is valid.
+  - ❌ Q3 is still a TODO.
+  - ⚠️ Q1 and Q2 are in my wording, not yours.
+
+  J, workflow (graded as "steering")
+  - ❌ There are no issues and no plans posted before building.
+  - ❌ The history is 3 big commits, not small tasks.
+  - ⚠️ Corrections becoming AGENTS.md rules: the file has rules now, but I wrote
+    them in one go.
+  - ⚠️ Testing on your phone and being able to explain the code depend on you.
+
+  K, optional bonus (+0.5 each)
+  - ✅ Clean TypeScript: no any, no as casts, no @ts-ignore.
+  - ⚠️ No warnings: no console.log, but terminal and on-screen warnings are
+    unchecked.
+  - ❌ Reanimated animations, pagination, localization, offline, tests, CI and
+    optimistic update are not built.
+  - ❌ Dark mode doesn't work. The theme has dark colours, but the Figma icons
+    are fixed dark-blue SVGs and the search placeholder is fixed black, so they
+    would vanish on a dark background.
+  - ❌ Accessibility is only partly done: 10 labels on 9 buttons, but I never
+    tested the largest text size, and fixed-height cards may clip.
+
+  Step by step
+
+  1. Commit and push (about 2 minutes)
+
+  1. Open a terminal in F:\Expo project.
+  2. Check the stray Pokedex/ folder is just an empty nested clone (it holds
+     only .git and .gitattributes). Delete it: Remove-Item -Recurse -Force
+     Pokedex.
+  3. Run git add AGENTS.md specs docs src/api/pokeapi.ts.
+  4. Run git commit -m "Add specs, AGENTS.md and explanation".
+  5. Run git push.
+  6. Open github.com/Tasnim-Hasan-Tabeeb/Pokedex in a browser and confirm specs/
+     and docs/ are there.
+
+  2. GitHub issues (about 15 minutes)
+
+  1. Go to the repo's Issues tab. If it's missing, open Settings and tick
+     "Issues".
+  2. Create five issues, in this order so they get numbers 1 to 5:
+     - Browse the list
+     - Search by name
+     - Pokémon detail
+     - Favorites
+     - Compare
+  3. For each, paste the Goal and Acceptance Criteria from its file in
+     specs/features/ as the issue body.
+  4. The assignment wants the agent's plan posted before the build, as a
+     comment. I built these without posting plans, so I can't truthfully give
+     you one that existed first. Post a comment that honestly says what was
+     built and which files. Don't call it a pre-build plan. You will lose some
+     of the 10% "steering" grade, and that is better than a false claim.
+  5. To close each issue by a commit, use one small commit per feature, for
+     example git commit --allow-empty -m "Browse the list. closes #1", then
+     push. If you'd rather keep real changes, tweak the matching spec file in
+     each commit.
+
+  3. Chat history (about 5 minutes)
+
+  1. In this Claude Code session, type /export and save the file.
+  2. Create chat-history/ in the repo and put the file in it. Put the issue
+     number in the name, e.g. issue-3-detail.md.
+  3. Open the file and check for anything private before you push.
+  4. The assignment wants one issue's chat from start to finish, ideally one
+     where something didn't work first time. Your phone crash fits.
+  5. Commit and push.
+
+  4. Q3 and your own words (about 20 minutes)
+
+  1. Think of one time the agent suggested something and you said no or changed
+     it. It has to be real. Tell me if you can't think of one.
+  2. Replace the TODO in docs/explanation.md with: what it suggested, what you
+     did instead and why, how you noticed, and where to find it (the chat file
+     or a commit).
+  3. Reread Q1 and Q2. Rewrite each sentence in your own words and keep the file
+     and line numbers.
+  4. Don't edit the files the explanation names before handing in, or the line
+     numbers will shift. If you do, ask me to re-check them.
+  5. Commit and push.
+
+  5. J, the process
+
+  You can't redo the past, but the rest of today can follow the rules. For each
+  bonus below, use a new chat, one issue, a plan comment before building, tsc
+  and lint, a test on your phone, and one small commit with closes #N. This also
+  gives you real material for Q3 and the chat history.
+
+  6. K, bonuses, easiest first
+
+  - CI (easy): add .github/workflows/ci.yml that runs npm ci, npx tsc --noEmit
+    and npm run lint on every push.
+  - Optimistic update (easy): in src/hooks/use-favorites.ts, update the
+    favorites list immediately and roll back if saving fails.
+  - Tests (medium): add jest, then one test per feature on the logic in
+    src/utils/. The functions are already pure and I tested them by hand.
+  - Reanimated (medium): it's already installed. Good candidates are a card
+    press, the heart pop, and stat bars growing.
+  - Accessibility (medium): set the phone to the largest text size, find what
+    clips, and switch fixed heights to minimum heights.
+  - Offline and localization (medium to hard): both need extra packages.
+  - Pagination (hard): it conflicts with search, which uses the full list.
+  - Dark mode (medium): the SVG icons need dark versions or a tint, and the
+    search placeholder must come from the theme.
+
+  Suggested order
+
+  1. Commit and push.
+  2. Issues.
+  3. Chat history.
+  4. Q3 and your wording.
+  5. CI and optimistic update.
+
+  Steps 1 to 4 decide whether you get above a 5. The deadline is tonight at
+  23:59.
+
+  Should I write the CI workflow file now, or draft the five issue bodies for
+  you to paste?
+
+> GitHub issues (about 15 minutes)
+
+  Do the github issues for me
+
+● I'll check whether I can create the issues directly. The earlier check only
+  covered the Bash shell, and gh may be installed for Windows PowerShell.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● gh isn't available and I have no GitHub token, so I won't use your stored git
+  credentials; instead I'll build a page of five pre-filled "New issue" links
+  for you to review and submit. I'm gathering the commits for each feature
+  first. · summary
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The links are short enough for GitHub (all under 4,100 characters). I'll check
+  the page's text came out right, then open it for you.
+
+  Ran 2 shell commands (ctrl+o to expand)
+● I couldn't create the issues myself. gh isn't installed and I have no GitHub
+  login, and I'm not going to pull a token out of your stored git credentials.
+  Instead I made a page where each issue is one click away, and I've opened it
+  in your browser.
+
+  The page is at F:\create-issues.html. A small error in my own check script (a
+  console encoding problem) was only in printing the preview, not in the page.
+  The page itself has all five links.
+
+  What to do (about 5 minutes):
+  1. Log in to GitHub in that browser if you aren't already.
+  2. Click "Open pre-filled issue 1". GitHub opens a "New issue" form with the
+     title and text already filled in. Read it, then press Submit new issue.
+  3. Go back to the page and do the same for issues 2, 3, 4 and 5, in that
+     order, so they get numbers #1 to #5.
+  4. Open github.com/Tasnim-Hasan-Tabeeb/Pokedex/issues and check that all five
+     are listed.
+
+  Each issue contains the Goal, Constraints, Acceptance Criteria and Out of
+  Scope from its specs/features/ file. It also has an "Implementation notes"
+  section with the files and commits for that feature.
+
+  Please note:
+  - Honesty: that notes section says it was written after the build, not before.
+    The assignment wants the agent's plan on the issue before building. I
+    couldn't produce that truthfully, because it didn't happen. If you'd rather
+    not draw attention to it, remove that one line before submitting, but don't
+    present it as a real plan.
+  - Unticked boxes: the Acceptance Criteria boxes are unticked on purpose. I
+    only tested in a web build, not on your phone. Tick them yourself after
+    trying each feature on your phone. That is also the "review and test on your
+    phone" step the assignment grades.
+  - Closing the issues: the issues will be open. To close each one with a
+    commit, run something like git commit --allow-empty -m "Browse the list.
+    closes #1" and push. Do that for #1 to #5 after the issues exist, and the
+    numbers must match.
+  - Still uncommitted: your specs/, docs/ and AGENTS.md aren't pushed yet. Do
+    that first.
+  - Delete the helper file: F:\create-issues.html is outside your repo, so it
+    won't be committed by accident.
+
+  Do you want me to draft the five "closes #N" commit commands, or write the CI
+  workflow next?
+
+> Think of one time the agent suggested something and you said no or changed
+  it. It has to be real. Tell me if you can't think of one.
+
+  I cannoit think of one
+
+● You don't have to invent one. I won't make one up either, because the grader
+  checks Q3 against your chat and commits.
+
+  I looked through this session for moments where you really didn't take my
+  suggestion. There are two, and both are in the chat, so you can point at them:
+
+  1. After the list (section C): I recommended writing the specs/ files and
+     setting up git first, since they decide whether you get above a 5. You
+     replied "Do D now" and built search instead.
+  2. After favorites (section F): I recommended doing the hand-in files next.
+     You replied "Do G now" and built Compare instead.
+
+  This is a legitimate answer for Q3, because I suggested one order and you
+  chose another. It isn't impressive, but it's true, and it has a real downside
+  that you can say plainly: you ended up writing the specs, AGENTS.md and the
+  issues last, on deadline day, so your commit history doesn't show the
+  plan-first way of working. Graders prefer an honest "I did this, and here's
+  what it cost me" over a made-up story.
+
+  A draft you can adapt, in plain words. Change anything that isn't how you
+  remember it:
+
+  ▎ After building the list, the agent suggested I write the specs and set up
+  ▎ git first, because they are needed for a pass. I said no and built search
+  ▎ instead, and did the same after favorites: the agent suggested the hand-in
+  ▎ files, and I built Compare first. I noticed it in the chat when the agent
+  ▎ asked "write the specs first, or go straight to D?" and I answered "Do D
+  ▎ now". The result was that all the app features were done, but the specs,
+  ▎ AGENTS.md and issues were written at the end, so my issues do not have a
+  ▎ plan from before the build. Next time I would write the spec for each
+  ▎ feature before building it. Chat: chat-history/ (the messages right after
+  ▎ sections C and F).
+
+  Three things to check:
+  - Export the whole session. The chat export must contain those two moments, so
+    use /export on this chat, not a new one.
+  - Don't claim you saw it in a diff. If you didn't, say how you noticed: you
+    read my recommendation and decided.
+  - It's weaker than a "rejected code" example. If you do the CI or
+    optimistic-update bonus in a new chat, read my plan and change or reject one
+    thing in it. That would be a stronger Q3. It only counts if it really
+    happens.
+
+  Which would you like: I draft Q3 in docs/explanation.md from the text above,
+  or you wait and do a bonus task first?

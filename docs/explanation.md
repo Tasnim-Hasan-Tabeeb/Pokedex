@@ -23,7 +23,4 @@
 
 TODO: write this one yourself, in your own words. It must be something that really happened in your chats. Say:
 
-- what the agent suggested,
-- what you did instead, and why,
-- how you noticed (reading the diff, testing on your phone, your spec),
-- where to find it (the chat in `chat-history/` or a commit).
+After building the list, the agent suggested I write the specs and set up git first, because they are needed for a pass. I said no and built search instead, and did the same after favorites: the agent suggested the hand-in files, and I built Compare first. I noticed it in the chat when the agent asked "write the specs first, or go straight to D?" and I answered "Do D now". The result was that all the app features were done, but the specs, AGENTS.md and issues were written at the end, so my issues do not have a plan from before the build. Next time I would write the spec for each feature before building it. Chat: chat-history/ (the messages right after sections C and F).
