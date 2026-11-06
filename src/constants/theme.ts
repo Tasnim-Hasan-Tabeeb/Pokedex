@@ -16,6 +16,7 @@ export const Colors = {
     primary: '#5631E8',
     imageBackground: '#F6F6FF',
     chip: 'rgba(14, 9, 64, 0.08)',
+    track: '#F3F3F7',
   },
   dark: {
     text: '#ffffff',
@@ -26,6 +27,7 @@ export const Colors = {
     primary: '#8566FF',
     imageBackground: '#17142E',
     chip: 'rgba(255, 255, 255, 0.12)',
+    track: '#2E3135',
   },
 } as const;
 

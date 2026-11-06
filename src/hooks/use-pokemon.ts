@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { skipToken, useQuery } from '@tanstack/react-query';
 
-import { fetchPokemonDetail, fetchPokemonList } from '@/api/pokeapi';
+import { fetchEvolutionChain, fetchPokemonDetail, fetchPokemonList } from '@/api/pokeapi';
 
 export function usePokemonList() {
   return useQuery({
@@ -10,9 +10,19 @@ export function usePokemonList() {
   });
 }
 
-export function usePokemonDetail(id: number) {
+/** Pass `undefined` to wait, for example while no Pokémon is chosen yet. */
+export function usePokemonDetail(id: number | undefined) {
   return useQuery({
     queryKey: ['pokemon', 'detail', id],
-    queryFn: () => fetchPokemonDetail(id),
+    queryFn: id === undefined ? skipToken : () => fetchPokemonDetail(id),
+  });
+}
+
+/** Waits until the species id is known (after the detail has loaded), then loads the chain. */
+export function useEvolutionChain(speciesId: number | undefined) {
+  return useQuery({
+    queryKey: ['pokemon', 'evolution', speciesId],
+    queryFn: speciesId === undefined ? skipToken : () => fetchEvolutionChain(speciesId),
+    staleTime: Infinity,
   });
 }

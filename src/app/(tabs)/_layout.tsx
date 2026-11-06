@@ -32,6 +32,13 @@ export default function TabsLayout() {
           tabBarIcon: ({ focused }) => <Icon name={focused ? 'heartFilled' : 'heart'} />,
         }}
       />
+      <Tabs.Screen
+        name="compare"
+        options={{
+          title: 'Compare',
+          tabBarIcon: ({ focused }) => <Icon name={focused ? 'compareActive' : 'compare'} />,
+        }}
+      />
     </Tabs>
   );
 }
