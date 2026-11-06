@@ -69,7 +69,7 @@ async function getJson<T>(url: string): Promise<T> {
   if (!response.ok) {
     throw new Error(`PokeAPI request failed (${response.status})`);
   }
-  return (await response.json()) as T;
+  return response.json();
 }
 
 /** "https://pokeapi.co/api/v2/pokemon-species/25/" -> 25 */

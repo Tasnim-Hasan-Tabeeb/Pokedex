@@ -1,3 +1,24 @@
+# Pokédex
+
+A Pokédex for your phone, running on live data from PokeAPI (no key, no login). It follows the course's Figma design. Product spec: `specs/product.md`. One spec per feature: `specs/features/`.
+
+- Expo Router, TanStack Query, expo-sqlite. Must run in Expo Go.
+- Screens in `src/app/`. Data goes through hooks in `src/hooks/`. API calls are in `src/api/pokeapi.ts`. SQL is only in `src/db/`. Plain logic (matching, comparing, formatting) is in `src/utils/`. Components are in `src/components/`. A screen never calls `fetch` or SQL itself.
+- Shared setup, reuse it and never add a second one:
+  - The one `QueryClient` is in `src/app/_layout.tsx`.
+  - The one database is `getDatabase()` in `src/db/database.ts`. New tables are created there.
+  - The card grid for the list, search, favorites and compare picker is `PokemonGrid` (`src/components/pokemon-grid.tsx`).
+  - Loading, error and empty states are in `src/components/query-status.tsx`. Use `compact` for a part of a screen.
+  - Icons are SVGs from the Figma in `assets/icons/`, shown with `<Icon name="..." />` (`src/components/icon.tsx`). Do not draw or import other icon sets.
+- Design: no hard-coded colours, sizes or fonts in a component. Use `useTheme()`, `Spacing`, `Radius`, `SoftShadow`, `TypeColors` and `FontFamily` from `src/constants/theme.ts`. The font is Rubik. Choose the weight with `FontFamily`, never with `fontWeight` (custom fonts on Android ignore it). Only fire, grass, poison and electric type colours are in the Figma. The others are our own choice. Say so when you add one.
+- Do not add a dependency without asking. If you do, install it with `npx expo install`.
+- Do not use `console.log`, `any`, `@ts-ignore` or `as` casts. Narrow the type instead.
+- A web build is a quick way to see a screen (`npx expo start --web`). Expo Go on the phone is the real test. `metro.config.js` adds `.wasm` only so expo-sqlite loads on web.
+- Before you call something done: run `npx tsc --noEmit` and `npm run lint`. Both must have no errors.
+- Before you write code for an issue: post a plan (which files, how, what you are unsure about) and a `- [ ] ` task list as one comment on the issue with `gh issue comment`. Wait for my go. Tick off tasks with `gh issue comment --edit-last` while you build.
+
+---
+
 This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
 ## Expo has changed — do not trust your training data
