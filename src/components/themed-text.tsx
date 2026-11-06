@@ -1,10 +1,20 @@
 import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
 
-import { Fonts, ThemeColor } from '@/constants/theme';
+import { FontFamily, Fonts, ThemeColor } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
 export type ThemedTextProps = TextProps & {
-  type?: 'default' | 'title' | 'small' | 'smallBold' | 'subtitle' | 'link' | 'linkPrimary' | 'code';
+  type?:
+    | 'default'
+    | 'title'
+    | 'small'
+    | 'smallBold'
+    | 'subtitle'
+    | 'heading'
+    | 'display'
+    | 'link'
+    | 'linkPrimary'
+    | 'code';
   themeColor?: ThemeColor;
 };
 
@@ -18,35 +28,49 @@ const styles = StyleSheet.create({
   small: {
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: 500,
+    fontFamily: FontFamily.medium,
   },
   smallBold: {
     fontSize: 14,
     lineHeight: 20,
-    fontWeight: 700,
+    fontFamily: FontFamily.bold,
   },
   default: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: 500,
+    fontFamily: FontFamily.regular,
   },
   title: {
     fontSize: 48,
-    fontWeight: 600,
+    fontFamily: FontFamily.semiBold,
     lineHeight: 52,
   },
   subtitle: {
     fontSize: 32,
     lineHeight: 44,
-    fontWeight: 600,
+    fontFamily: FontFamily.semiBold,
+  },
+  /** Section titles such as "All Pokemon": 24 px, extra bold. */
+  heading: {
+    fontSize: 24,
+    lineHeight: 29,
+    fontFamily: FontFamily.extraBold,
+  },
+  /** The Pokemon name on the detail screen: 32 px, extra bold. */
+  display: {
+    fontSize: 32,
+    lineHeight: 38,
+    fontFamily: FontFamily.extraBold,
   },
   link: {
     lineHeight: 30,
     fontSize: 14,
+    fontFamily: FontFamily.medium,
   },
   linkPrimary: {
     lineHeight: 30,
     fontSize: 14,
+    fontFamily: FontFamily.medium,
     color: '#3c87f7',
   },
   code: {
